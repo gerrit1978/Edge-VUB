@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * This module provides user-related functionalities
+ *
+ */
+
+/************************************************************************************
+ * drupal hooks
+ ************************************************************************************/
+
+
+/**
+ * Implements hook_block_info
+ */
+function hc_team_block_info() {
+  $blocks = array();
+  
+  $blocks['users_per_core_theme'] = array(
+    'info' => t('Users per core theme'),
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view
+ */
+function hc_team_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'users_per_core_theme':
+      $block['content'] = _hc_team_block_render_block_users_per_core_theme();
+      break;
+  }
+  
+  return $block;
+}
+
+/**
+ * Implements hook_preprocess_page
+ */
+function hc_team_username_alter(&$name, $account) {
+  if (arg(0) == 'user' && is_numeric(arg(1))) {
+    if (isset($account->uid)) {
+      $firstname_field = field_get_items('user', $account, 'field_user_firstname');
+      $lastname_field = field_get_items('user', $account, 'field_user_lastname');
+      if (is_array($firstname_field) && isset($firstname_field[0]['value'])) {
+        $firstname = $firstname_field[0]['value'];
+      }
+      if (is_array($lastname_field) && isset($lastname_field[0]['value'])) {
+        $lastname = $lastname_field[0]['value'];
+      }
+      $name = $firstname . " " . $lastname;
+    }
+  }
+}
+
+
+/************************************************************************************
+ * helper functions
+ ************************************************************************************/
+
+/** 
+ * Helper function for rendering block "Users per core theme"
+ */
+function _hc_team_block_render_block_users_per_core_theme() {
+
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nid = arg(1);
+  }
+  
+  $view = views_embed_view('team_members', 'users_per_core_theme', $nid);
+
+  return $view;
+}
