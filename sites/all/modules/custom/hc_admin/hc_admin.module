@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @file
+ *
+ * This module provides an overview page with links to different admin overview subpages
+ */
+
+/**
+ * Implements hook_menu
+ */
+function hc_admin_menu() {
+  $items = array();
+  
+  $items['admin/content/overview'] = array(
+    'title' => t('Content overview'),
+    'page callback' => '_hc_admin_overview_page',
+    'access arguments' => array('access site administration pages'),
+  );
+  
+  $items['admin/content/overview/user'] = array(
+    'title' => t('Add new content'),
+    'page callback' => '_hc_admin_overview_page_user',
+    'access arguments' => array('access site content user page'),
+  );
+  
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission
+ */
+function hc_admin_permission() {
+  return array(
+    'access site administration pages' => array(
+      'title' => t('Access site administration pages'),
+      'description' => t('Access the overview pages with content on the site'),
+    ),
+    'access site content user page' => array(
+      'title' => t('Access user content page'),
+      'description' => t('Access the overview page with link for adding new content'),
+    ),
+  );
+} 
+
+
+/**
+ * Callback function for page
+ */
+function _hc_admin_overview_page() {
+  $items = array();
+  
+  $items[] = l('Static pages', 'admin/content/overview/page');
+  $items[] = l('Messages', 'admin/content/overview/message');
+  $items[] = l('Datafiles', 'admin/content/overview/datafile');
+  $items[] = l('Events', 'admin/content/overview/event');
+  $items[] = l('Research Network', 'admin/content/overview/research_network');
+  $items[] = l('Publications', 'admin/content/overview/publication');  
+  $items[] = l('Work Packages', 'admin/content/overview/work_package');  
+  $items[] = l('Working Papers', 'admin/content/overview/working_paper');  
+  $items[] = l('Galleries', 'admin/content/overview/gallery');
+  
+  return theme('item_list', array('items' => $items));
+}
+
+
+/**
+ * Implements hook_form_FORM_IDalter
+ */
+function hc_admin_form_publication_node_form_alter(&$form, &$form_state) {
+/*
+  $users = $form['field_pub_authors']['und']['#options'];
+
+  $users_new = array('_none' => '- Geen -');
+  
+  
+  foreach ($users as $uid => $user) {
+    if ($uid > 0) {
+	    $user_wrapper = entity_metadata_wrapper('user', $uid);
+	    $user_lastname = $user_wrapper->field_user_lastname->value();
+	    $user_firstname = $user_wrapper->field_user_firstname->value();
+	    $users_new[$uid] = $user . " - " . $user_lastname . " " . $user_firstname;
+	  }
+  }
+
+  unset($form['field_pub_authors']['und']['#options']);
+  $form['field_pub_authors']['und']['#options'] = $users_new;
+  $form['field_pub_authors']['und']['#size'] = 30;
+*/
+  
+} 
+
+/**
+ * Callback function for user page
+ */
+function _hc_admin_overview_page_user() {
+  $items = array(
+    l('Add new datafile', 'node/add/datafile'),
+    l('Add new event', 'node/add/event'),
+    l('Add new message', 'node/add/message'),
+    l('Add new publication', 'node/add/publication'),
+    l('Add new working paper', 'node/add/working-paper'),
+  );
+  
+  return theme('item_list', array('items' => $items));
+}
+
+
+/**
+ * Implements hook_form_alter
+ */
+function hc_admin_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_profile_form') {
+    global $user;
+    if (in_array('teamlid', $user->roles) && !in_array('administrator', $user->roles)) {
+      $form['field_user_c4']['#printed'] = TRUE;
+    }
+
+  }
+}

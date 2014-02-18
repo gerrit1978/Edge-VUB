@@ -1,0 +1,291 @@
+<?php
+/**
+ * @file
+ * This module provides publication-related functionality (i.e. Views theming)
+ */
+
+/**
+ * Implements hook_theme
+ */
+function hc_publications_theme($existing, $type, $theme, $path) {
+  return array(
+    // main catalog pages
+    'views_view_field__publications__nothing' => array( 
+      'arguments' => array('view' => FALSE, 'field' => FALSE, 'row' => FALSE),
+      'original hook' => 'views_view_field',
+      'template' => 'views-view-field-publications--nothing',
+    ),
+    'views_view_field__working_papers__page__field_work_paper_user' =>array( 
+      'arguments' => array('view' => FALSE, 'field' => FALSE, 'row' => FALSE),
+      'original hook' => 'views_view_field',
+      'template' => 'views-view-field--working-papers--page--field-work-paper-user',
+    ),
+
+  );
+}
+
+/**
+ * Implements hook_views_api
+ */
+function hc_publications_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
+
+/**
+ * Preprocess function for authors publication
+ */
+function hc_publications_preprocess_views_view_field__publications__nothing(&$vars) {
+  $output = "";
+  $output_type = "";
+	$nid = $vars['row']->nid;
+	$node = node_load($nid);
+
+	$publication_types = _hc_publications_get_types();
+	
+  $publication_type_field = field_get_items('node', $node, 'field_pub_type');
+  $publication_type = $publication_type_field[0]['tid'];
+  
+  // get all fields for this node
+  $pub_title = $node->title;
+  $pub_publication_year_field = field_get_items('node', $node, 'field_pub_publication_year');
+  $pub_abstract_field = field_get_items('node', $node, 'field_pub_abstract');
+  $pub_keywords_field = field_get_items('node', $node, 'field_pub_keywords');
+  $pub_email_field = field_get_items('node', $node, 'field_pub_email');
+  $pub_file_field = field_get_items('node', $node, 'field_pub_file');
+  
+  $pub_authors_field = field_get_items('node', $node, 'field_pub_authors');
+  
+  $pub_editors_field = field_get_items('node', $node, 'field_pub_editors');
+  $pub_extra_editors_field = field_get_items('node', $node, 'field_pub_extra_editors');
+  
+  $pub_journal_title_field = field_get_items('node', $node, 'field_pub_journal_title');
+  
+  $pub_book_title_field = field_get_items('node', $node, 'field_pub_book_title');
+  
+  $pub_conference_field = field_get_items('node', $node, 'field_pub_conference');
+  
+
+  // AUTHORS
+  $output_authors = "";
+  $all_authors = array();
+  if (is_array($pub_authors_field) && count($pub_authors_field)) {
+    foreach ($pub_authors_field as $author) {
+      $author_field_collection_item = entity_metadata_wrapper('field_collection_item', $author['value']);
+      $author_type = $author_field_collection_item->field_pub_authors_type->value();
+      if ($author_type == 'internal') {
+        $author_internal = $author_field_collection_item->field_pub_authors_internal->value();
+        $author_internal_firstname_field = field_get_items('user', $author_internal, 'field_user_firstname');
+        $author_internal_lastname_field = field_get_items('user', $author_internal, 'field_user_lastname');
+        $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);
+        $all_authors[] = $author_complete;
+      } else {
+        $author_external = $author_field_collection_item->field_pub_authors_external->value();
+        $all_authors[] = $author_external;
+      }
+    }
+  }
+  
+	if (is_array($all_authors) && count($all_authors)) {
+	  if (count($all_authors) > 1) {
+	    for ($i = 0; $i < (count($all_authors) - 2); $i++) {
+	      $output_authors .= $all_authors[$i] . ", ";
+	    }
+	    $output_authors .= $all_authors[count($all_authors) - 2] . " & " . $all_authors[count($all_authors) - 1];
+	  } else {
+	    $output_authors = $all_authors[0];
+	  }
+	}
+
+	
+	// EDITORS
+  $output_editors = "";
+  $all_editors = array();
+  if (is_array($pub_editors_field) && count($pub_editors_field)) {
+    foreach ($pub_editors_field as $editor) {
+      $editor_field_collection_item = entity_metadata_wrapper('field_collection_item', $editor['value']);
+      $editor_type = $editor_field_collection_item->field_pub_editors_type->value();
+      if ($editor_type == 'internal') {
+        $editor_internal = $editor_field_collection_item->field_pub_editors_internal->value();
+        $editor_internal_firstname_field = field_get_items('user', $editor_internal, 'field_user_firstname');
+        $editor_internal_lastname_field = field_get_items('user', $editor_internal, 'field_user_lastname');
+        $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);
+        $all_editors[] = $editor_complete;
+      } else {
+        $editor_external = $editor_field_collection_item->field_pub_editors_external->value();
+        $all_editors[] = $editor_external;
+      }
+    }
+  }
+	
+	
+	if (is_array($all_editors) && count($all_editors)) {
+	  if (count($all_editors) > 1) {
+	    for ($i = 0; $i < (count($all_editors) - 2); $i++) {
+	      $output_editors .= $all_editors[$i] . ", ";
+	    }
+	    $output_editors .= $all_editors[count($all_editors) - 2] . " & " . $all_editors[count($all_editors) - 1];
+	  } else {
+	    $output_editors = $all_editors[0];
+	  }
+	}
+	
+  // YEAR	
+  $pub_year = $pub_publication_year_field[0]['value'];
+
+  // JOURNAL TITLE
+  $pub_journal_title = $pub_journal_title_field[0]['safe_value'];
+
+  // BOOK TITLE
+  $pub_book_title = $pub_book_title_field[0]['safe_value'];
+
+  // CONFERENCE
+  $pub_conference = $pub_conference_field[0]['safe_value'];
+
+/*
+  print_r($publication_types);
+  exit();
+*/
+
+  // define output for different publication types
+  switch ($publication_type) {
+    case ($publication_types['Peer-reviewed article']):
+    case ($publication_types['Other Article (without peer-review system)']):
+    case ($publication_types['Various']):
+      $output = sprintf('<strong>%s</strong> (%s) "%s" in <em>%s</em>.', $output_authors, $pub_year, $pub_title, $pub_journal_title);
+      break;
+    case ($publication_types['PhD']):
+      $output = sprintf('<strong>%s</strong> (%s) "%s".', $output_authors, $pub_year, $pub_title);
+      break;
+    case ($publication_types['Edited Book']):
+      $output = sprintf('<strong>%s</strong> (Eds). (%s) "%s".', $output_editors, $pub_year, $pub_title);
+      break;
+    case ($publication_types['Conference Paper']):
+      $output = sprintf('<strong>%s</strong> (%s) "%s". <em>Paper prepared for/presented at %s</em>.', $output_authors, $pub_year, $pub_title, $pub_conference);
+      break;
+    case ($publication_types['Book Chapter']):
+      $output = sprintf('<strong>%s</strong> (%s) "%s" in %s (eds.), <em>%s</em>.', $output_authors, $pub_year, $pub_title, $output_editors, $pub_book_title);
+      break;
+    case ($publication_types['Book']):
+      $output = sprintf('<strong>%s</strong> (%s) <em>%s</em>.', $output_authors, $pub_year, $pub_title);
+      break;
+  }
+  
+  $vars['output'] = $output;
+  
+  // PUBLICATION TYPE
+  $publication_type_final = array_search($publication_type, $publication_types);
+  
+  $vars['output_type'] = "<div class='publication-type'>category: " . $publication_type_final . "</div>";
+}
+
+
+/**
+ * Implements hook_form_alter: replace author reference user ids by name
+ */
+function hc_publications_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'views_exposed_form') {
+    if (isset($form['field_pub_authors_uid']) && isset($form['field_pub_authors_uid']['#options']) && is_array($form['field_pub_authors_uid']['#options'])) {
+      foreach ($form['field_pub_authors_uid']['#options'] as $key => $option) {
+        if (is_numeric($key)) {
+          $user = entity_metadata_wrapper('user', $key);
+          $firstname = $user->field_user_firstname->value();
+          $lastname = $user->field_user_lastname->value();
+          $full_name = $lastname . " " . $firstname;
+          asort($form['field_pub_authors_uid']['#options']);
+          $form['field_pub_authors_uid']['#options'][$key] = $full_name;
+        }
+      }
+    }
+    if (isset($form['author']) && isset($form['author']['#options']) && is_array($form['author']['#options'])) {
+      foreach ($form['author']['#options'] as $key => $option) {
+        if (is_numeric($key)) {
+          $user = entity_metadata_wrapper('user', $key);
+          $firstname = $user->field_user_firstname->value();
+          $lastname = $user->field_user_lastname->value();
+          $full_name = $lastname . " " . $firstname;
+          asort($form['author']['#options']);
+          $form['author']['#options'][$key] = $full_name;
+        }
+      }
+    }
+
+  }
+}
+
+
+/**
+ * Helper function for defining publication types
+ */
+function _hc_publications_get_types() {
+	// vid for vocabulary "Publication Types" = 6
+	$tree = taxonomy_get_tree(2);
+
+  $publication_types = array();
+	foreach ($tree as $leaf) {
+    $publication_types[$leaf->name] = $leaf->tid;
+	}
+	
+	return $publication_types;
+
+}
+
+
+/** 
+ * Preprocess function for working papers authors
+ */
+function hc_publications_preprocess_views_view_field__working_papers__page__field_work_paper_user(&$vars) {
+  $output = "";
+  $output_type = "";
+	$nid = $vars['row']->nid;
+	$wip_wrapper = entity_metadata_wrapper('node', $nid);
+	$wip_users = $wip_wrapper->field_work_paper_user->value();
+	$wip_extra_authors = $wip_wrapper->field_work_paper_user_extra->value();
+
+	if (is_array($wip_users) && count($wip_users)) {
+	  $authors = array();
+	  $output_authors = "";
+	  foreach ($wip_users as $author) {
+	    $uid = $author->uid;
+	    $author_wrapper = entity_metadata_wrapper('user', $author);
+	    $author_firstname = $author_wrapper->field_user_firstname->value();
+	    $author_lastname = $author_wrapper->field_user_lastname->value();
+	    $author_c4 = $author_wrapper->field_user_c4->value();
+      $author_fullname = $author_lastname . " " . $author_firstname;
+      if (isset($author_c4[0])) {
+        $author_link = $author_fullname;
+      } else {      
+        $author_link = l($author_fullname, 'user/' . $uid);
+      }
+      $authors[] = $author_link;
+	  }
+	}
+	
+	if (is_array($wip_extra_authors) && count($wip_extra_authors)) {
+    foreach ($wip_extra_authors as $extra_author) {
+      $authors[] = $extra_author;
+    }
+	}
+	
+	$output_authors = "";
+
+  if (count($authors) == 1) {
+    $output_authors = $authors[0];
+  }
+  if (count($authors) == 2) {
+    $output_authors = $authors[0] . " & " . $authors[1];
+  }
+
+  if (count($authors) > 2) {
+    for ($i = 0; $i < (count($authors) - 2); $i++) {
+      $output_authors .= $authors[$i] . ", ";
+    }
+    $output_authors .= $authors[count($authors) - 2];
+    
+    $output_authors .= " & " . $authors[count($authors) - 1];
+  }
+	
+  $vars['authors'] = $output_authors;
+}
