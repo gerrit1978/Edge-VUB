@@ -54,7 +54,7 @@ function hc_team_username_alter(&$name, $account) {
         $lastname = $lastname_field[0]['value'];
       }
       
-      if ($firstname && $lastname) {
+      if (isset($firstname) && isset($lastname)) {
         $name = $firstname . " " . $lastname;      
       }
     }
