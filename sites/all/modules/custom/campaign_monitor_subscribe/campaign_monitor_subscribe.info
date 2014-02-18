@@ -1,0 +1,7 @@
+; $Id$
+
+name        = Campaign Monitor Subscribe
+description = Automatically adds users to Campaign Monitor List
+core        = 7.x
+
+package     = HedgeComm

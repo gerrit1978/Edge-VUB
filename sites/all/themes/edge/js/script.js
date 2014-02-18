@@ -14,11 +14,13 @@
 
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
-Drupal.behaviors.my_custom_behavior = {
+Drupal.behaviors.soundbitesSlider = {
   attach: function(context, settings) {
-
-    // Place your code here.
-
+    $('.view-team-members.view-display-id-block_3').flexslider({
+      controlNav: false,
+      directionNav: false,
+      slideshowSpeed: 3000 
+    });
   }
 };
 
