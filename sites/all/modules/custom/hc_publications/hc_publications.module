@@ -319,8 +319,14 @@ function hc_publications_preprocess_views_view_field__working_papers__page__fiel
  * Helper function for rendering block Publications per user
  */
 function _hc_publications_block_publications_per_user_render() {
+
+  $output = "";
+
   // get user id
   if (arg(0) == 'user' && is_numeric(arg(1))) {
+  
+    $nids = array();
+  
     $uid = arg(1);
     
     $result = db_query("SELECT a.entity_id AS nid, a.field_pub_authors_value AS fieldcollection, ai.entity_id AS authorid
@@ -331,9 +337,12 @@ function _hc_publications_block_publications_per_user_render() {
     foreach ($result as $row) {
       $nids[] = $row->nid;
     }
+
+    if (count($nids)) {
+      $output = views_embed_view('publications', 'pub_per_user', implode($nids, ','));    
+    }
+
   }
-  
-  $output = views_embed_view('publications', 'pub_per_user', implode($nids, ','));
   
   return $output;
 }
