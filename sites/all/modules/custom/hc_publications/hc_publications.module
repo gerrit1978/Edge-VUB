@@ -5,6 +5,36 @@
  */
 
 /**
+ * Implements hook_block_info
+ */
+function hc_publications_block_info() {
+  $blocks = array();
+  
+  $blocks['publications_per_user'] = array(
+    'info' => t('Publications per user'),
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view
+ */
+function hc_publications_block_view($delta = '') {
+  $block = array();
+  
+  switch ($delta) {
+    case 'publications_per_user':
+      $block['subject'] = t('Publications');
+      $block['content'] = _hc_publications_block_publications_per_user_render();
+      break;
+  }
+  
+  return $block;
+}
+
+
+/**
  * Implements hook_theme
  */
 function hc_publications_theme($existing, $type, $theme, $path) {
@@ -143,11 +173,6 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
 
   // CONFERENCE
   $pub_conference = $pub_conference_field[0]['safe_value'];
-
-/*
-  print_r($publication_types);
-  exit();
-*/
 
   // define output for different publication types
   switch ($publication_type) {
@@ -288,4 +313,27 @@ function hc_publications_preprocess_views_view_field__working_papers__page__fiel
   }
 	
   $vars['authors'] = $output_authors;
+}
+
+/**
+ * Helper function for rendering block Publications per user
+ */
+function _hc_publications_block_publications_per_user_render() {
+  // get user id
+  if (arg(0) == 'user' && is_numeric(arg(1))) {
+    $uid = arg(1);
+    
+    $result = db_query("SELECT a.entity_id AS nid, a.field_pub_authors_value AS fieldcollection, ai.entity_id AS authorid
+      FROM {field_data_field_pub_authors} a, {field_data_field_pub_authors_internal} ai 
+      WHERE a.field_pub_authors_value = ai.entity_id AND ai.field_pub_authors_internal_target_id=:uid;
+    ", array(':uid' => $uid));
+    
+    foreach ($result as $row) {
+      $nids[] = $row->nid;
+    }
+  }
+  
+  $output = views_embed_view('publications', 'pub_per_user', implode($nids, ','));
+  
+  return $output;
 }
