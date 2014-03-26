@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Authcache storage backend for Drupal core cache system.
+ */
+
+/**
+ * Implements hook_authcache_backend_cache_save().
+ *
+ * Cache storage handler for drupal builtin cache-system
+ */
+function authcache_builtin_authcache_backend_cache_save($body, $headers, $created) {
+  $cache = (object) array(
+    'cid' => authcache_builtin_cid(),
+    'data' => array(
+      'path' => $_GET['q'],
+      'body' => $body,
+      'title' => drupal_get_title(),
+      'headers' => $headers,
+    ),
+    'expire' => CACHE_TEMPORARY,
+    'created' => $created,
+  );
+
+  cache_set($cache->cid, $cache->data, 'cache_page', $cache->expire);
+
+  // Add headers required to make stupid browsers behave.
+  _authcache_builtin_cacheinc_fix_browsers();
+}
+
+
+/**
+ * Implements hook_authcache_debug_info().
+ */
+function authcache_builtin_authcache_debug_info() {
+  $info['Cache Class'] = get_class(_cache_get_object('cache_page'));
+  $info['Cache CID'] = authcache_builtin_cid();
+  return $info;
+}
+
+/**
+ * Return the authcache cache-id for the given path.
+ *
+ * @see authcache_key()
+ */
+function authcache_builtin_cid($request_uri = NULL) {
+  if (!isset($request_uri)) {
+    $request_uri = request_uri();
+  }
+
+  $key = authcache_key();
+  return $key . $request_uri;
+}

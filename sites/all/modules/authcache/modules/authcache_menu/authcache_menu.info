@@ -1,0 +1,17 @@
+name = Authcache Menu
+description = Authcache support for local tasks and local actions
+package = Performance and scalability
+core = 7.x
+dependencies[] = authcache
+dependencies[] = authcache_p13n
+files[] = includes/AuthcacheMenuItemTitleFragment.inc
+files[] = includes/AuthcacheMenuLocalActionsFragment.inc
+files[] = includes/AuthcacheMenuLocalTabsFragment.inc
+files[] = tests/authcache_menu.test
+
+; Information added by Drupal.org packaging script on 2013-12-20
+version = "7.x-2.0-beta2"
+core = "7.x"
+project = "authcache"
+datestamp = "1387524808"
+

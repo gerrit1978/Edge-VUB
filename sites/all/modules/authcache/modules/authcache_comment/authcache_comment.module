@@ -1,0 +1,118 @@
+<?php
+/**
+ * @file
+ * Provide personalization for the comment module.
+ */
+
+/**
+ * Implements hook_authcache_p13n_assembly().
+ */
+function authcache_comment_authcache_p13n_assembly() {
+  return array(
+    'comment-num-new' => array(
+      'admin name' => t('Number of new comments'),
+      'admin group' => t('Comment'),
+      'admin description' => t('Node teaser'),
+      'fragment' => array(
+        '#partial' => 'new',
+        '#class' => 'AuthcacheCommentNumNewFragment',
+      ),
+      'cache maxage' => 600,
+    ),
+  );
+}
+
+/**
+ * Implements hook_comment_view_alter().
+ *
+ * Hide the number-of-new-comments-link on node teasers.
+ */
+function authcache_comment_node_view_alter(&$build) {
+  global $user;
+
+  if ($user->uid && authcache_page_is_cacheable()) {
+    $node = $build['#node'];
+    // Note that we check here whether comment-comments is in the links. We do
+    // not need to show new-comments link when no comments have been posted in
+    // the first place. Also note that we cannot test for comment-new-comments
+    // because existance of this link depends on the logged in user.
+    if (isset($build['links']['comment']['#links']['comment-comments'])) {
+      // Add partial. Ensure that comment-new-comments link will always show up
+      // in the same place.
+      $original = isset($build['links']['comment']['#links']['comment-new-comments']['title']) ? $build['links']['comment']['#links']['comment-new-comments']['title'] : '';
+      unset($build['links']['comment']['#links']['comment-new-comments']);
+      $build['links']['comment']['#links']['comment-new-comments'] = array(
+        'title' => theme('authcache_p13n_partial', array(
+          'assembly' => 'comment-num-new',
+          'partial' => 'new',
+          'param' => $node->nid,
+          'original' => $original,
+        )),
+        'html' => TRUE,
+      );
+
+      $build['#attached']['js'][] = drupal_get_path('module', 'authcache_comment') . '/authcache_comment.js';
+    }
+  }
+}
+
+/**
+ * Implements hook_comment_view_alter().
+ *
+ * Replace the edit-link on comments if all of the following conditions are met:
+ *
+ *   1. Comment is published
+ *   2. A user has the right to edit its own comments
+ *   3. The user does *not* have administer comments permission
+ *
+ * If the logged in user belongs to a role with admin-permission, there is no
+ * need to alter the link. If on the other hand, the user belongs to a role
+ * without 'edit own comments' permission, the link will not be added by
+ * comment_links anyway.
+ *
+ * @see comment_links()
+ * @see comment_access()
+ */
+function authcache_comment_comment_view_alter(&$build) {
+  global $user;
+
+  if ($user->uid && authcache_page_is_cacheable()) {
+    $comment = $build['#comment'];
+
+    if ($comment->status == COMMENT_PUBLISHED && user_access('edit own comments') && !user_access('administer comments')) {
+      // Ensure that comment-edit link will always show up in the same place.
+      unset($build['links']['comment']['#links']['comment-edit']);
+      $build['links']['comment']['#links']['comment-edit'] = array(
+        'title' => t('edit'),
+        'href' => "comment/$comment->cid/edit",
+        'attributes' => array(
+          'class' => array('authcache-comment-edit', 'element-hidden'),
+          'data-p13n-uid' => $comment->uid,
+        ),
+        'html' => TRUE,
+      );
+      $build['#attached']['js'][] = drupal_get_path('module', 'authcache_comment') . '/authcache_comment.js';
+    }
+  }
+}
+
+/**
+ * Process comment template variables.
+ *
+ * Replace "new" marker with empty span containing timestamp info.
+ *
+ * @see comment.module
+ */
+function authcache_comment_preprocess_comment(&$variables) {
+  global $user;
+
+  if ($user->uid && authcache_page_is_cacheable()) {
+    $comment = $variables['comment'];
+    $node = $variables['node'];
+
+    $variables['new'] = '';
+    if (module_exists('authcache_node_history')) {
+      $variables['new'] = authcache_node_history_node_mark($node->nid, $comment->changed, 'new');
+    }
+  }
+}

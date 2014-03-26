@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Provides a stub cache backend for testing purposes.
+ */
+
+/**
+ * Implements hook_boot().
+ */
+function authcache_backend_test_boot() {
+  $info = HookStub::record(__FUNCTION__, func_get_args());
+
+  if ($info === FALSE) {
+    return;
+  }
+
+  if (!isset($info['backends'])) {
+    $module = isset($info[0]) ? $info[0] : 'authcache_backend_test';
+    $vary_header = isset($info[1]) ? $info[1] : 'Cookie';
+    $info['backends'] = array($module => $vary_header);
+  }
+
+  foreach ($info['backends'] as $module => $vary_header) {
+    authcache_backend_init($module, $vary_header);
+  }
+}
+
+/**
+ * Implements hook_authcache_backend_cache_save().
+ */
+function authcache_backend_test_authcache_backend_cache_save($body, $headers, $created) {
+  return HookStub::record(__FUNCTION__, func_get_args());
+}
