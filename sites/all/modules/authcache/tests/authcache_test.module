@@ -383,16 +383,9 @@ function authcache_test_authcache_key_properties_alter(&$properties) {
 }
 
 /**
- * Implements hook_authcache_key_ensuere_present().
+ * Implements hook_authcache_backend_key_set().
  */
-function authcache_test_authcache_key_ensure_present($key, $lifetime, $current_session, $previous_session) {
-  return HookStub::record(__FUNCTION__, func_get_args());
-}
-
-/**
- * Implements hook_authcache_key_ensuere_absent().
- */
-function authcache_test_authcache_key_ensure_absent($current_session, $previous_session) {
+function authcache_test_authcache_backend_key_set($key, $lifetime, $has_session) {
   return HookStub::record(__FUNCTION__, func_get_args());
 }
 

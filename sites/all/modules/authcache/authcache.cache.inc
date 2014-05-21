@@ -16,7 +16,7 @@
  */
 function authcache_serve_page_from_cache(stdClass $cache, $authcache_key) {
   // Negotiate whether to use compression.
-  $page_compression = variable_get('page_compression', TRUE) && extension_loaded('zlib');
+  $page_compression = !empty($cache->data['page_compressed']);
   $return_compressed = $page_compression && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== FALSE;
 
   // Get headers set in hook_boot(). Keys are lower-case.
@@ -120,15 +120,19 @@ function authcache_backend_cache_save() {
     $headers[$header_names[$name_lower]] = $value;
   }
 
-  // Retrieve and compress the document body.
+  // Retrieve the document body. Note that we do not call ob_get_clean() here in
+  // order to allow cache-backends to access the buffer directly if necessary.
+  // Only after the backend was invoked, ob_clean() is called.
   $body = ob_get_contents();
-  if (variable_get('page_compression', TRUE) && extension_loaded('zlib')) {
+
+  // Check whether the current page might be compressed.
+  $page_compressed = variable_get('page_compression', TRUE) && extension_loaded('zlib');
+  if ($page_compressed) {
     $body = gzencode($body, 9, FORCE_GZIP);
   }
 
   // Invoke cache backend.
-  $created = REQUEST_TIME;
-  module_invoke(authcache_backend(), 'authcache_backend_cache_save', $body, $headers, $created);
+  module_invoke(authcache_backend(), 'authcache_backend_cache_save', $body, $headers, $page_compressed);
 
   // Remove buffer content.
   ob_clean();
@@ -139,8 +143,9 @@ function authcache_backend_cache_save() {
     'data' => array(
       'body' => $body,
       'headers' => $headers,
+      'page_compressed' => $page_compressed,
     ),
-    'created' => $created,
+    'created' => REQUEST_TIME,
   );
 
   return $cache;
@@ -149,7 +154,7 @@ function authcache_backend_cache_save() {
 /**
  * Initialize the cache backend module.
  */
-function authcache_backend_init($module, $vary_header) {
+function authcache_backend_init($module, $vary_header, $initial_key) {
   if (drupal_is_cli()) {
     return FALSE;
   }
@@ -167,6 +172,10 @@ function authcache_backend_init($module, $vary_header) {
   // Finally set vary header and cache backend.
   drupal_add_http_header('Vary', $vary_header);
   authcache_backend($module);
+  authcache_backend_initial_key($initial_key);
+  $initial_session_id = isset($_COOKIE[session_name()]) ? $_COOKIE[session_name()] : FALSE;
+  authcache_backend_initial_session_id($initial_session_id);
+
   return TRUE;
 }
 
@@ -181,6 +190,49 @@ function authcache_backend($set_cache_backend = NULL) {
   }
 
   return $cache_backend;
+}
+
+/**
+ * Return the key suitable for this request if no session is open.
+ */
+function authcache_backend_anonymous_key() {
+  global $base_root;
+
+  $generator = variable_get('authcache_key_generator');
+  if (is_callable($generator)) {
+    $key = call_user_func($generator);
+  }
+  else {
+    $key = $base_root;
+  }
+
+  return $key;
+}
+
+/**
+ * Return the authcache key and session captured during backend initialization.
+ */
+function authcache_backend_initial_key($set_key = NULL) {
+  $initial_key = &drupal_static(__FUNCTION__);
+
+  if (isset($set_key)) {
+    $initial_key = $set_key;
+  }
+
+  return $initial_key;
+}
+
+/**
+ * Return the session id captured during backend initialization.
+ */
+function authcache_backend_initial_session_id($set_session_id = NULL) {
+  $initial_session_id = &drupal_static(__FUNCTION__);
+
+  if (isset($set_session_id)) {
+    $initial_session_id = $set_session_id;
+  }
+
+  return $initial_session_id;
 }
 
 /**

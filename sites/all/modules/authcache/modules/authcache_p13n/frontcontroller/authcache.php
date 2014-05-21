@@ -17,8 +17,8 @@ if ($drupalroot == $__file__) {
   exit();
 }
 
-// Relocate contents of $_SERVER variabl to DRUPAL_ROOT by removing path
-// componints pointing to the authcache front controller.
+// Relocate contents of $_SERVER variable to DRUPAL_ROOT by removing path
+// components pointing to the authcache front controller.
 $preg = '|' . preg_quote(substr($__file__, strlen($drupalroot) + 1), '|') . '|';
 $_SERVER = preg_replace($preg, 'authcache.php', $_SERVER);
 

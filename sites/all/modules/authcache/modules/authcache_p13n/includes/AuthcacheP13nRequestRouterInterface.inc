@@ -34,8 +34,8 @@ interface AuthcacheP13nRequestRouterInterface {
    *   The identifier of a request (e.g., frag/form-token).
    *
    * @return String|FALSE
-   *   An absolute URL which can be used to call back to the request with the
-   *   given argument.
+   *   An URL which can be used to call back to the request with the given
+   *   argument.
    */
   public function generateURL($route_id, $arg = NULL);
 

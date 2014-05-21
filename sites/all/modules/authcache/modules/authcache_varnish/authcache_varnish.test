@@ -179,7 +179,7 @@ class AuthcacheVarnishTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Cover hook_authcache_varnish_request_validate().
+   * Cover authcache_varnish_request_validate().
    */
   public function testRequestValidation() {
     variable_set('authcache_varnish_validate_reverse_proxy_address', FALSE);
@@ -221,7 +221,7 @@ class AuthcacheVarnishTestCase extends DrupalWebTestCase {
 }
 
 /**
- * Unit tests for authcache_varnish_authcache_varnish_request_validate().
+ * Unit tests for authcache_varnish_request_validate().
  */
 class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
   protected $oldserver;
@@ -307,7 +307,7 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $this->variableSet('authcache_varnish_validate_reverse_proxy_address', FALSE);
     $this->variableSet('authcache_varnish_header', FALSE);
 
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Do not validate any headers when variables authcache_varnish_validate_reverse_proxy_address and authcache_varnish_header both are set to FALSE');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Do not validate any headers when variables authcache_varnish_validate_reverse_proxy_address and authcache_varnish_header both are set to FALSE');
   }
 
   /**
@@ -316,9 +316,9 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
   public function testValidateDefaultXVarnishHeader() {
     $this->variableSet('authcache_varnish_validate_reverse_proxy_address', FALSE);
 
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when X-Varnish header is missing');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when X-Varnish header is missing');
     $_SERVER['HTTP_X_VARNISH'] = '123';
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when X-Varnish header is present');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when X-Varnish header is present');
   }
 
   /**
@@ -328,9 +328,9 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $this->variableSet('authcache_varnish_validate_reverse_proxy_address', FALSE);
 
     $this->variableSet('authcache_varnish_header', 'HTTP_X_CUSTOM_HEADER');
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when X-Custom-Header header is missing');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when X-Custom-Header header is missing');
     $_SERVER['HTTP_X_CUSTOM_HEADER'] = '123';
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when X-Custom-Header header is present');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when X-Custom-Header header is present');
   }
 
   /**
@@ -344,11 +344,11 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $_SERVER['HTTP_X_FORWARDED_FOR'] = $this->remoteIp;
 
     $_SERVER['REMOTE_ADDR'] = $this->proxyIp;
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
     $_SERVER['REMOTE_ADDR'] = $this->proxy2Ip;
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
     $_SERVER['REMOTE_ADDR'] = $this->untrustedIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when remote address is not in list of trusted proxies');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when remote address is not in list of trusted proxies');
   }
 
   /**
@@ -363,11 +363,11 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'] = $this->remoteIp;
 
     $_SERVER['REMOTE_ADDR'] = $this->proxyIp;
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
     $_SERVER['REMOTE_ADDR'] = $this->proxy2Ip;
-    $this->assertNull(authcache_varnish_authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
+    $this->assertIdentical(TRUE, authcache_varnish_request_validate(), 'Accept request when remote address is in list of trusted proxies');
     $_SERVER['REMOTE_ADDR'] = $this->untrustedIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when remote address is not in list of trusted proxies');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when remote address is not in list of trusted proxies');
   }
 
   /**
@@ -381,11 +381,11 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $_SERVER['HTTP_X_FORWARDED_FOR'] = "";
 
     $_SERVER['REMOTE_ADDR'] = $this->proxyIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
     $_SERVER['REMOTE_ADDR'] = $this->proxy2Ip;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
     $_SERVER['REMOTE_ADDR'] = $this->untrustedIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when reverse_proxy variable is off.');
   }
 
   /**
@@ -399,10 +399,10 @@ class AuthcacheVarnishTestDefaultValidation extends DrupalUnitTestCase {
     $_SERVER['HTTP_X_FORWARDED_FOR'] = "";
 
     $_SERVER['REMOTE_ADDR'] = $this->proxyIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
     $_SERVER['REMOTE_ADDR'] = $this->proxy2Ip;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
     $_SERVER['REMOTE_ADDR'] = $this->untrustedIp;
-    $this->assertIdentical(FALSE, authcache_varnish_authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
+    $this->assertIdentical(FALSE, authcache_varnish_request_validate(), 'Reject request when X-Forwarded-For is empty');
   }
 }

@@ -32,6 +32,6 @@ function authcache_builtin_expire_v2_expire_cache($urls, $wildcards, $object_typ
   }
 
   foreach ($wildcard_cids as $cid) {
-    cache_clear_all($cid, 'cache_page', $wildcard);
+    cache_clear_all($cid, 'cache_page', TRUE);
   }
 }

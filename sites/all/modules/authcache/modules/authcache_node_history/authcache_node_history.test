@@ -164,7 +164,7 @@ class AuthcacheNodeHistoryTest extends DrupalWebTestCase {
     $this->assertTrue($url);
 
     // First request should report seeded timestamp.
-    $result = $this->drupalGetAjax($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAjax($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $expect = array(
       'authcacheNodeHistory' => array(
@@ -174,7 +174,7 @@ class AuthcacheNodeHistoryTest extends DrupalWebTestCase {
     $this->assertEqual($expect, $result);
 
     // Second request should report later timestamp.
-    $result = $this->drupalGetAjax($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAjax($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $this->assertEqual($result['authcacheNodeHistory'][0]['nid'], $this->node->nid);
     $this->assertTrue($result['authcacheNodeHistory'][0]['ts'] > $init_ts);
@@ -201,7 +201,7 @@ class AuthcacheNodeHistoryTest extends DrupalWebTestCase {
 
     // First request should report seeded timestamp.
     $this->drupalGet('node/' . $this->node->nid);
-    $result = $this->drupalGetAjax($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAjax($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $expect = array(
       'authcacheNodeHistory' => array(
@@ -212,7 +212,7 @@ class AuthcacheNodeHistoryTest extends DrupalWebTestCase {
 
     // Second request should report later timestamp.
     $this->drupalGet('node/' . $this->node->nid);
-    $result = $this->drupalGetAjax($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAjax($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $this->assertEqual($result['authcacheNodeHistory'][0]['nid'], $this->node->nid);
     $this->assertTrue($result['authcacheNodeHistory'][0]['ts'] > $init_ts);

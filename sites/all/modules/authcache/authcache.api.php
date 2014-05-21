@@ -141,31 +141,6 @@ function hook_authcache_key_properties_alter(&$properties) {
 }
 
 /**
- * Make the key available for subsequent request from the same client.
- */
-function hook_authcache_key_ensure_present($key, $lifetime, $current_session, $previous_session) {
-  if ($previous_session && $previous_session != $current_session) {
-    cache_clear_all($previous_session, 'cache_authcache_key');
-  }
-
-  // Update cached key if necessary.
-  $cache = cache_get($current_session, 'cache_authcache_key');
-  if ($cache === FALSE || $cache->expire > 0 && $cache->expire < REQUEST_TIME || $cache->data != $current_key) {
-    $expires = $lifetime ? REQUEST_TIME + $lifetime : CACHE_TEMPORARY;
-    cache_set($current_session, $key, 'cache_authcache_key', $expires);
-  }
-}
-
-/**
- * Make sure there is no key used on subsequent requests from the same client.
- */
-function hook_authcache_key_ensure_absent($current_session, $previous_session) {
-  if ($previous_session) {
-    cache_clear_all($previous_session, 'cache_authcache_key');
-  }
-}
-
-/**
  * Return information about cookies in use.
  *
  * Modules and themes may declare the characteristics of cookies they use by
@@ -255,21 +230,36 @@ function hook_authcache_cookie_alter(&$cookies, $account) {
  *   ob_get_contents().
  * @param array $headers
  *   The headers which will be delivered along with the document.
- * @param int $created
- *   The unix timestamp for the creation-date of the content.
+ * @param bool $page_compressed
+ *   Flag set to TRUE when $body contains gzipped data.
  */
-function hook_authcache_backend_cache_save($body, $headers, $created) {
-  $cache = (object) array(
-    'cid' => authcache_builtin_cid(),
-    'data' => array(
-      'path' => $_GET['q'],
-      'body' => $body,
-      'title' => drupal_get_title(),
-      'headers' => $headers,
-    ),
-    'expire' => CACHE_TEMPORARY,
-    'created' => $created,
+function hook_authcache_backend_cache_save($body, $headers, $page_compressed) {
+  $cid = authcache_builtin_cid();
+  $data = array(
+    'path' => $_GET['q'],
+    'body' => $body,
+    'title' => drupal_get_title(),
+    'headers' => $headers,
+    // We need to store whether page was compressed or not,
+    // because by the time it is read, the configuration might change.
+    'page_compressed' => $page_compressed,
   );
 
-  cache_set($cache->cid, $cache->data, 'cache_page', $cache->expire);
+  cache_set($cid, $data, 'cache_page', CACHE_TEMPORARY);
+}
+
+/**
+ * Make the key available for subsequent request from the same client.
+ */
+function hook_authcache_backend_key_set($key, $lifetime, $has_session) {
+  if ($previous_session && $previous_session != $current_session) {
+    cache_clear_all($previous_session, 'cache_authcache_key');
+  }
+
+  // Update cached key if necessary.
+  $cache = cache_get($current_session, 'cache_authcache_key');
+  if ($cache === FALSE || $cache->expire > 0 && $cache->expire < REQUEST_TIME || $cache->data != $current_key) {
+    $expires = $lifetime ? REQUEST_TIME + $lifetime : CACHE_TEMPORARY;
+    cache_set($current_session, $key, 'cache_authcache_key', $expires);
+  }
 }

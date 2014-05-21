@@ -494,7 +494,7 @@ class AuthcacheFormTestTokenDeferral extends DrupalWebTestCase {
     // Test form token retrieval.
     $url = authcache_p13n_request_get_callback('frag/form-token', 'authcache-form-test-form');
     $headers = array('X-Authcache: 1');
-    $this->drupalGet($url, array(), $headers);
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], $headers);
     $this->assertField('form_token');
   }
 
@@ -553,9 +553,35 @@ class AuthcacheFormTestTokenDeferral extends DrupalWebTestCase {
     $markup = '<span ' . drupal_attributes(array('class' => array($class))) . '></span>';
     HookStub::on('theme_authcache_p13n_fragment__authcache_form_test', $markup);
 
-    // Form should be submittable by both, anonymous and authenticated users
-    // and form_token_build_id should not be present anymore on form for
-    // authenticated users.
+    // With only markup-substitution, caching is still cancelled for
+    // authenticated users. Cached forms require the Cache Object API.
+    $excluded_stub = $this->stubmod->hook('authcache_excluded');
+    $canceled_stub = $this->stubmod->hook('authcache_canceled');
+    $this->drupalGet('authcache-form-test-cached-form');
+    $this->assertNoField('form_token');
+    $this->assertField('form_build_id');
+    $this->assertEqual(0, count($this->xpath('//span[@class=:class]', array(':class' => $class))));
+    $this->assertStub($excluded_stub, HookStub::never());
+    $this->assertStub($canceled_stub, HookStub::never());
+
+    $this->drupalLogin($user);
+    $excluded_stub = $this->stubmod->hook('authcache_excluded');
+    $canceled_stub = $this->stubmod->hook('authcache_canceled');
+    $this->drupalGet('authcache-form-test-cached-form');
+    $this->assertField('form_token');
+    $this->assertField('form_build_id');
+    $this->assertEqual(0, count($this->xpath('//span[@class=:class]', array(':class' => $class))));
+    $this->assertStub($excluded_stub, HookStub::never());
+    $this->assertStub($canceled_stub, HookStub::once());
+    $this->drupalLogout();
+
+    // Setup cache object API.
+    module_enable(array('cacheobject'));
+    variable_set('cache_class_cache_form', 'CacheObjectAPIWrapper');
+    variable_set('cacheobject_class_cache_form', 'DrupalDatabaseCache');
+    $this->resetAll();
+
+    // Test with Cache Object API.
     $excluded_stub = $this->stubmod->hook('authcache_excluded');
     $canceled_stub = $this->stubmod->hook('authcache_canceled');
     $this->drupalGet('authcache-form-test-cached-form');
@@ -570,17 +596,11 @@ class AuthcacheFormTestTokenDeferral extends DrupalWebTestCase {
     $canceled_stub = $this->stubmod->hook('authcache_canceled');
     $this->drupalGet('authcache-form-test-cached-form');
     $this->assertNoField('form_token');
-    $this->assertNoField('form_build_id');
-    $this->assertEqual(2, count($this->xpath('//span[@class=:class]', array(':class' => $class))));
+    $this->assertField('form_build_id');
+    $this->assertEqual(1, count($this->xpath('//span[@class=:class]', array(':class' => $class))));
     $this->assertStub($excluded_stub, HookStub::never());
     $this->assertStub($canceled_stub, HookStub::never());
     $this->drupalLogout();
-
-    // Test form build id retrieval.
-    $url = authcache_p13n_request_get_callback('frag/form-build-id', $build_id);
-    $headers = array('X-Authcache: 1');
-    $this->drupalGet($url, array(), $headers);
-    $this->assertField('form_build_id');
   }
 }
 

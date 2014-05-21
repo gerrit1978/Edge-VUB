@@ -9,14 +9,14 @@
  */
 class AuthcacheP13nDefaultRequestRouter implements AuthcacheP13nRequestRouterInterface {
   /**
-   * Object type for request handlers.
+   * Key-value collection id for handlers.
    */
-  const HANDLER_TYPE = 'AuthcacheP13nRequestHandlerInterface';
+  const HANDLER_COLLECTION = 'route_handlers';
 
   /**
-   * Object type for request url generators.
+   * Key-value collection id for url generators.
    */
-  const URL_GENERATOR_TYPE = 'AuthcacheP13nRequestUrlGeneratorInterface';
+  const URL_GENERATOR_COLLECTION = 'route_generators';
 
   /**
    * {@inheritdoc}
@@ -108,7 +108,7 @@ class AuthcacheP13nDefaultRequestRouter implements AuthcacheP13nRequestRouterInt
    */
   protected function getHandlerStore() {
     if (!isset($this->handlerStore)) {
-      $this->handlerStore = new AuthcacheP13nDatabaseKeyValueStore(__CLASS__ . '/' . static::HANDLER_TYPE);
+      $this->handlerStore = new AuthcacheP13nDatabaseKeyValueStore(static::HANDLER_COLLECTION);
     }
     return $this->handlerStore;
   }
@@ -118,7 +118,7 @@ class AuthcacheP13nDefaultRequestRouter implements AuthcacheP13nRequestRouterInt
    */
   protected function getUrlGeneratorStore() {
     if (!isset($this->urlGeneratorStore)) {
-      $this->urlGeneratorStore = new AuthcacheP13nDatabaseKeyValueStore(__CLASS__ . '/' . static::URL_GENERATOR_TYPE);
+      $this->urlGeneratorStore = new AuthcacheP13nDatabaseKeyValueStore(static::URL_GENERATOR_COLLECTION);
     }
     return $this->urlGeneratorStore;
   }

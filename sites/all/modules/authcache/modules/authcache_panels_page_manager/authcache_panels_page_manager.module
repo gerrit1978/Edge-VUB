@@ -36,7 +36,9 @@ function authcache_panels_page_manager_authcache_p13n_fragment() {
  * Utility function: produce fragments from page manager handler.
  */
 function _authcache_panels_page_manager_collect_fragments_from_handlers($handlers) {
-  page_manager_get_task_handler('panel_context');
+  if (!page_manager_get_task_handler('panel_context')) {
+    return array();
+  }
 
   $fragments = array();
   foreach ($handlers as $handler_id => $handler) {

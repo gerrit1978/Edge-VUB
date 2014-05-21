@@ -174,7 +174,7 @@ class AuthcacheUserTest extends DrupalWebTestCase {
     $this->assertTrue($url);
 
     // First request should report seeded timestamp.
-    $result = $this->drupalGetAjax($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAjax($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $expect = array(
       'authcacheUser' => array(

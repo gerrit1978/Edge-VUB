@@ -54,7 +54,7 @@ function theme_authcache_p13n_fragment__authcache_esi($variables) {
   if ($url) {
     drupal_add_http_header('X-Authcache-Do-ESI', 1);
 
-    $attrs = array('src' => $url);
+    $attrs = array('src' => url($url['path'], $url['options']));
     return '<esi:include ' . drupal_attributes($attrs) . '/>';
   }
 }
@@ -71,7 +71,7 @@ function theme_authcache_p13n_setting__authcache_esi($variables) {
     drupal_add_js(drupal_get_path('module', 'authcache_p13n') . '/authcache_p13n.js');
     drupal_add_js(drupal_get_path('module', 'authcache_esi') . '/authcache_esi.js');
 
-    $attrs = array('src' => $url);
+    $attrs = array('src' => url($url['path'], $url['options']));
     return '<iframe class="authcache-esi-settings" src="about:blank"><esi:include ' . drupal_attributes($attrs) . '/></iframe>';
   }
 }
@@ -94,7 +94,7 @@ function theme_authcache_p13n_assembly__authcache_esi($variables) {
       'class' => array('authcache-esi-assembly'),
       'data-authcache-esi-target' => 'span.' . $class,
     );
-    $esi_attrs = array('src' => $url);
+    $esi_attrs = array('src' => url($url['path'], $url['options']));
     return '<iframe ' . drupal_attributes($iframe_attrs) . '><esi:include ' . drupal_attributes($esi_attrs) . '/></iframe>';
   }
 }

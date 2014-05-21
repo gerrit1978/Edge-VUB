@@ -134,7 +134,7 @@ class AuthcacheMenuTestLocalTasks extends DrupalWebTestCase {
     $_GET['q'] = $orig_q;
 
     $headers = array('X-Authcache: 1');
-    $this->drupalGet($url, array(), $headers);
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], $headers);
     $this->assertResponse(200);
     $this->assertText('View');
     $this->assertText('Edit');
@@ -264,7 +264,7 @@ class AuthcacheMenuTestItemTitle extends DrupalWebTestCase {
     // Test menu item retrieval.
     $url = authcache_p13n_request_get_callback('frag/menu-item-title', 'node');
     $headers = array('X-Authcache: 1');
-    $this->drupalGet($url, array(), $headers);
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], $headers);
     $this->assertResponse(200);
     $this->assertText($nav_menu_title);
   }

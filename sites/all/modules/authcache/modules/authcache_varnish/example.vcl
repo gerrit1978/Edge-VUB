@@ -314,19 +314,19 @@ sub vcl_recv {
   //   set req.http.X-Authcache-Get-Key = "skip";
   // }
 
-  // /**
-  //  * Example 4: Trigger key-retrieval for all users, including anonymous.
-  //  *
-  //  * Forcing key-retrieval for users without a session enables caching even for
-  //  * requests with cookies. This may come in handy in one of the following
-  //  * situations:
-  //  * - A custom key generator is in place for anonymous users. E.g. to separate
-  //  *   cache bins according to language / region / device type.
-  //  * - The Authcache Debug widget is enabled for all users (including anonymous).
-  //  */
-  // if (!req.http.X-Authcache-Get-Key) {
-  //   set req.http.X-Authcache-Get-Key = "get";
-  // }
+  /**
+   * Example 4: Trigger key-retrieval for all users, including anonymous.
+   *
+   * Forcing key-retrieval for users without a session enables caching even for
+   * requests with cookies. This may come in handy in one of the following
+   * situations:
+   * - A custom key generator is in place for anonymous users. E.g. to separate
+   *   cache bins according to language / region / device type.
+   * - The Authcache Debug widget is enabled for all users (including anonymous).
+   */
+  if (!req.http.X-Authcache-Get-Key) {
+    set req.http.X-Authcache-Get-Key = "get";
+  }
 
 
   /**

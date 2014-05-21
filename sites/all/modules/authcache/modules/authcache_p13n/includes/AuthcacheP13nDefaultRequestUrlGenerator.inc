@@ -12,7 +12,7 @@ class AuthcacheP13nDefaultRequestUrlGenerator implements AuthcacheP13nRequestUrl
   /**
    * Personalization fragment frontcontroller relative to DRUPAL_ROOT.
    */
-  protected $frontControllerPath;
+  protected $frontControllerURL;
 
   /**
    * @var AuthcacheP13nCacheGranularity
@@ -32,7 +32,16 @@ class AuthcacheP13nDefaultRequestUrlGenerator implements AuthcacheP13nRequestUrl
     $front_controller,
     AuthcacheP13nCacheGranularity $cache_granularity
   ) {
-    $this->frontControllerPath = $front_controller;
+    // If the frontcontroller is given as a relative path, prepend it with the
+    // base path.
+    $parts = parse_url($front_controller);
+    if (empty($parts['host'])) {
+      $this->frontControllerURL = base_path() . $front_controller;
+    }
+    else {
+      $this->frontControllerURL = $front_controller;
+    }
+
     $this->cacheGranularity = $cache_granularity;
   }
 
@@ -40,8 +49,6 @@ class AuthcacheP13nDefaultRequestUrlGenerator implements AuthcacheP13nRequestUrl
    * {@inheritdoc}
    */
   public function url($route_id, $arg) {
-    global $base_url;
-
     $query = array(
       'a' => $arg,
       'r' => $route_id,
@@ -58,9 +65,12 @@ class AuthcacheP13nDefaultRequestUrlGenerator implements AuthcacheP13nRequestUrl
       );
     }
 
-    return url($base_url . '/' . $this->frontControllerPath, array(
-      'absolute' => TRUE,
-      'query' => $query,
-    ));
+    return array(
+      'path' => $this->frontControllerURL,
+      'options' => array(
+        'external' => TRUE,
+        'query' => $query,
+      ),
+    );
   }
 }

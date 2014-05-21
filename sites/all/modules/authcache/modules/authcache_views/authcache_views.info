@@ -10,9 +10,9 @@ files[] = includes/AuthcacheViewsDisplayPageContextProvider.inc
 files[] = includes/AuthcacheViewsFragment.inc
 files[] = views/authcache_views_plugin_display_extender.inc
 
-; Information added by Drupal.org packaging script on 2013-12-20
-version = "7.x-2.0-beta2"
+; Information added by Drupal.org packaging script on 2014-04-17
+version = "7.x-2.0-beta3"
 core = "7.x"
 project = "authcache"
-datestamp = "1387524808"
+datestamp = "1397725161"
 

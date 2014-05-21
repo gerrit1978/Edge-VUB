@@ -29,17 +29,6 @@ function authcache_admin_config($form, &$form_state) {
     '#title' => t('Key Management'),
     '#collapsible' => TRUE,
   );
-  $form['key']['key_method'] = array(
-    '#type' => 'select',
-    '#title' => t('Method'),
-    '#options' => array(
-      'cache' => t('Cache'),
-      'cookie' => t('Cookie'),
-      'none' => t('None'),
-    ),
-    '#default_value' => variable_get('authcache_key_method', 'cache'),
-    '#description' => t('The way authcache keys will be associated with user sessions. Select a method appropriate for the page cache backend in use. The Builtin cache backend runs with either Cache or Cookie, the Boost cache backend requires Cookie and the Varnish cache backend implements its own key-retrieval method.'),
-  );
 
   $session_cookie_lifetime = (int) ini_get('session.cookie_lifetime');
   if ($session_cookie_lifetime > 0) {
@@ -59,7 +48,7 @@ function authcache_admin_config($form, &$form_state) {
     '#empty_option' => $session_period_option,
     '#empty_value' => 'session',
     '#zero_duration' => t('Temporary'),
-    '#description' => t('Select <em>Temporary</em> if keys shold last for one browser session (when using the Cookie method) or keys should be removed during cron runs (Cache method)'),
+    '#description' => t('Select <em>Temporary</em> if keys shold last for one browser session (when using Cookies) or keys should be removed during cron runs.'),
   );
 
   $form['adv'] = array(
@@ -134,7 +123,7 @@ function authcache_admin_config_submit($form, &$form_state) {
   }
 
   // Delete variable if not in use.
-  foreach (array('http200', 'su', 'noajax', 'mimetype', 'key_method') as $key) {
+  foreach (array('http200', 'su', 'noajax', 'mimetype') as $key) {
     if ($value = $form_state['values'][$key]) {
       variable_set("authcache_{$key}", $value);
     }

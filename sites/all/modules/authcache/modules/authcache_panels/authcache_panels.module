@@ -48,7 +48,7 @@ function authcache_panels_ctools_plugin_directory($module, $plugin) {
  * Implements hook_panels_pane_content_alter().
  */
 function authcache_panels_panels_pane_content_alter($content, $pane, $args, $context, $renderer, $display) {
-  if (authcache_page_is_cacheable() && authcache_panels_pane_fragment_enabled($pane)) {
+  if ($content && authcache_page_is_cacheable() && authcache_panels_pane_fragment_enabled($pane)) {
     $config = _authcache_panels_pane_get_options($pane);
 
     $fragment = array(
@@ -58,7 +58,8 @@ function authcache_panels_panels_pane_content_alter($content, $pane, $args, $con
       '#fallback' => $config['fallback'],
     );
 
-    $element = array('#markup' => $content->content);
+    $markup = !empty($content->content) ? $content->content : '';
+    $element = array('#markup' => $markup);
     authcache_p13n_attach($element, $fragment);
 
     $content->content = render($element);
@@ -77,7 +78,11 @@ function authcache_panels_panels_display_save($display) {
  */
 function _authcache_panels_pane_get_options($pane) {
   if (!empty($pane->cache) && $pane->cache['method'] == 'authcache_panels') {
-    return $pane->cache['settings']['authcache'] + authcache_p13n_config_defaults();
+    $settings = array();
+    if (!empty($pane->cache['settings']['authcache'])) {
+      $settings = $pane->cache['settings']['authcache'];
+    }
+    return $settings + authcache_p13n_config_defaults();
   }
 
   return FALSE;

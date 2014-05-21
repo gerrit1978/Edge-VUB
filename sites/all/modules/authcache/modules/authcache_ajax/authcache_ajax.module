@@ -58,7 +58,7 @@ function theme_authcache_p13n_fragment__authcache_ajax($variables) {
 
     $attrs = array(
       'class' => array('authcache-ajax-frag'),
-      'data-authcache-ajax-src' => $url,
+      'data-authcache-ajax-src' => url($url['path'], $url['options']),
     );
 
     return '<span ' . drupal_attributes($attrs) . '></span>';
@@ -77,7 +77,7 @@ function theme_authcache_p13n_setting__authcache_ajax($variables) {
     drupal_add_js(drupal_get_path('module', 'authcache_p13n') . '/authcache_p13n.js');
     drupal_add_js(drupal_get_path('module', 'authcache_ajax') . '/authcache_ajax.js');
 
-    drupal_add_js(array('authcacheP13nAjaxSettings' => array($setting => $url)), 'setting');
+    drupal_add_js(array('authcacheP13nAjaxSettings' => array($setting => url($url['path'], $url['options']))), 'setting');
 
     return '';
   }
@@ -95,7 +95,7 @@ function theme_authcache_p13n_assembly__authcache_ajax($variables) {
     drupal_add_js(drupal_get_path('module', 'authcache_p13n') . '/authcache_p13n.js');
     drupal_add_js(drupal_get_path('module', 'authcache_ajax') . '/authcache_ajax.js');
 
-    drupal_add_js(array('authcacheP13nAjaxAssemblies' => array('span.' . $class => $url)), 'setting');
+    drupal_add_js(array('authcacheP13nAjaxAssemblies' => array('span.' . $class => url($url['path'], $url['options']))), 'setting');
 
     return '';
   }

@@ -51,18 +51,6 @@ function _authcache_builtin_cacheinc_cache_key_get($session_id) {
 }
 
 /**
- * Retrieve the authcache key for a session from a cookie.
- */
-function _authcache_builtin_cacheinc_cookie_key_get($session_id) {
-  if (!isset($_COOKIE['authcache'])) {
-    return FALSE;
-  }
-  else {
-    return $_COOKIE['authcache'];
-  }
-}
-
-/**
  * Add headers required to make stupid browsers behave.
  *
  * When modifying this function, do not forget to adapt the respective VCL
@@ -98,8 +86,7 @@ function authcache_builtin_cacheinc_retrieve_cache_page() {
   // The following three basic exclusion rules are mirrored in
   // authcache_authcache_request_exclude() in authcache.module
   // BEGIN: basic exclusion rules.
-  $vary_header = variable_get('authcache_builtin_vary', 'Cookie');
-  if (!function_exists('authcache_backend_init') || !authcache_backend_init('authcache_builtin', $vary_header)) {
+  if (!function_exists('authcache_backend_init')) {
     return FALSE;
   }
 
@@ -129,43 +116,22 @@ function authcache_builtin_cacheinc_retrieve_cache_page() {
   }
 
   // Try to retrieve a key when the session cookie is present on the request.
-  $key = NULL;
   if (isset($_COOKIE[session_name()])) {
-    $session_id = $_COOKIE[session_name()];
-    switch (variable_get('authcache_key_method', 'cache')) {
-      case 'cache':
-        $key = _authcache_builtin_cacheinc_cache_key_get($session_id);
-        break;
-
-      case 'cookie':
-        $key = _authcache_builtin_cacheinc_cookie_key_get($session_id);
-        break;
-
-      default:
-        $key_get = variable_get('authcache_builtin_key_get');
-        if (!is_callable($key_get)) {
-          return FALSE;
-        }
-
-        $key = call_user_func($key_get, $session_id);
-        break;
-    }
-
-    // When key needs to be regenerated, return and trigger a full bootstrap.
-    if ($key === FALSE) {
-      return FALSE;
-    }
+    $key = _authcache_builtin_cacheinc_cache_key_get($_COOKIE[session_name()]);
+  }
+  else {
+    $key = authcache_backend_anonymous_key();
   }
 
-  // Fallback to anonymous content.
-  if (!$key) {
-    $generator = variable_get('authcache_key_generator');
-    if (is_callable($generator)) {
-      $key = call_user_func($generator);
-    }
-    else {
-      $key = $base_root;
-    }
+  // Initialize the backend.
+  $vary_header = variable_get('authcache_builtin_vary', 'Cookie');
+  if (!authcache_backend_init('authcache_builtin', $vary_header, $key)) {
+    return FALSE;
+  }
+
+  // When key needs to be regenerated, return and trigger a full bootstrap.
+  if ($key === FALSE) {
+    return FALSE;
   }
 
   // Attempt to retrieve page from cache.

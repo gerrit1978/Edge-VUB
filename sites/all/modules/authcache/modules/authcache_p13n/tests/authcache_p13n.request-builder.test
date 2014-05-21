@@ -63,13 +63,15 @@ class AuthcacheP13nTestRequestBuilder extends DrupalWebTestCase {
     $result = authcache_p13n_request_get_callback('test/bad', array('my-args' => array('some' => 'args')));
     $this->assertFalse($result);
 
-    $expect = url('http://example.com/authcache.php', array(
-      'absolute' => TRUE,
-      'query' => array(
-        'r' => 'test/good',
-        'a' => array('my-args' => array('some' => 'args')),
+    $expect = array(
+      'path' => 'http://example.com/authcache.php',
+      'options' => array(
+        'query' => array(
+          'r' => 'test/good',
+          'a' => array('my-args' => array('some' => 'args')),
+        ),
       ),
-    ));
+    );
 
     $result = authcache_p13n_request_get_callback('test/good', array('my-args' => array('some' => 'args')));
     $this->assertEqual($expect, $result);

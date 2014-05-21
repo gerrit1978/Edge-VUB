@@ -755,7 +755,7 @@ function authcache_p13n_request_exists($route_id) {
  */
 function authcache_p13n_request_get_callback($route_id, $arg) {
   $router = authcache_p13n_request_get_router();
-  return $router->generateUrl($route_id, $arg);
+  return $router->generateURL($route_id, $arg);
 }
 
 
@@ -1213,6 +1213,53 @@ function authcache_p13n_is_authcache_p13n_request() {
 
 /**
  * @} End of "defgroup authcache_p13n_request"
+ */
+
+
+/**
+ * @defgroup authcache_p13n_debug Debug widget
+ * @{
+ * Provide additional status information through the debug widget.
+ */
+
+
+/**
+ * Implements hook_authcache_debug_info().
+ */
+function authcache_p13n_authcache_debug_info() {
+  $debug_info = array();
+
+  $client_info = authcache_p13n_client_info();
+  $all_clients = array_map(function ($client) {
+    return $client['title'];
+  }, $client_info);
+
+  $enabled_clients = array_map(function ($client) {
+    return $client['title'];
+  }, array_filter($client_info, function ($client) {
+    return !empty($client['enabled']);
+  }));
+
+  if (empty($all_clients)) {
+    authcache_debug_log(t('P13n'), t('No client module enabled, markup substitution will not work.'));
+    $debug_info['P13n Clients'] = t('No client module enabled');
+  }
+  else {
+    $debug_info['P13n Clients'] = implode(', ', $all_clients);
+    if (empty($enabled_clients)) {
+      authcache_debug_log(t('P13n'), t('None of the enabled client modules is active on this request, markup substitution will not work.'));
+      $debug_info['Active P13n Clients'] = t('No active client module');
+    }
+    else {
+      $debug_info['Active P13n Clients'] = implode(', ', $enabled_clients);
+    }
+  }
+
+  return $debug_info;
+}
+
+/**
+ * @} End of "defgroup authcache_p13n_debug"
  */
 
 

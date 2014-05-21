@@ -24,7 +24,7 @@ function authcache_p13n_schema() {
       'collection' => array(
         'description' => 'Primary Key: Unique collection name.',
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 63,
         'not null' => TRUE,
         'default' => '',
       ),
@@ -39,6 +39,36 @@ function authcache_p13n_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Reduce column size of authcache_p13n_key_value.collection.
+ */
+function authcache_p13n_update_7002() {
+  // Remove all entries from authcache_p13n_key_value table.
+  db_truncate('authcache_p13n_key_value')->execute();
+
+  // Alter the schema.
+  $keys = array(
+    'primary key' => array('name', 'collection'),
+  );
+  $spec = array(
+    'description' => 'Primary Key: Unique collection name.',
+    'type' => 'varchar',
+    'length' => 63,
+    'not null' => TRUE,
+    'default' => '',
+  );
+  db_drop_primary_key('authcache_p13n_key_value');
+  db_change_field('authcache_p13n_key_value', 'collection', 'collection', $spec, $keys);
+
+  // Make sure that AuthcacheP13nKeyValueStoreInterface and
+  // AuthcacheP13nDatabaseKeyValueStore are available to the auto-loader.
+  registry_rebuild();
+
+  // Rebuild the request router in order to ensure that the new (shorter)
+  // collection names are used.
+  authcache_p13n_request_router_rebuild();
 }
 
 /**
@@ -59,7 +89,7 @@ function authcache_p13n_update_7001() {
         'collection' => array(
           'description' => 'Primary Key: Unique collection name.',
           'type' => 'varchar',
-          'length' => 255,
+          'length' => 63,
           'not null' => TRUE,
           'default' => '',
         ),

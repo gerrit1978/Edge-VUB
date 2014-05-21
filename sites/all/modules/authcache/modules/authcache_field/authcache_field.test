@@ -179,7 +179,7 @@ class AuthcacheFieldTest extends DrupalWebTestCase {
       ),
     );
 
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(200);
     $this->assertEqual($expect, $result);
   }
@@ -203,7 +203,7 @@ class AuthcacheFieldTest extends DrupalWebTestCase {
     ));
     $this->assertTrue($url);
 
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(403);
     $this->assertFalse($result);
   }

@@ -436,7 +436,7 @@ class AuthcacheCommentTest extends DrupalWebTestCase {
     ));
     $this->assertTrue($url);
 
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $expect = array('new' => array($this->node->nid => ''));
     $this->assertEqual($expect, $result, 'Should not report any new comments if there are none');
 
@@ -453,7 +453,7 @@ class AuthcacheCommentTest extends DrupalWebTestCase {
 
     // M1: Login again and verify that num-new reports a comment count of 1 now.
     $this->drupalLogin($this->member1);
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $expect = array(
       'new' => array(
         $this->node->nid => '<span class="authcache-comment-new" data-new-count="1"></span>',

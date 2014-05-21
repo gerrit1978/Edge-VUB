@@ -9,36 +9,25 @@
  */
 function authcache_varnish_boot() {
   if (authcache_varnish_request_validate()) {
-    $vary_header = variable_get('authcache_varnish_vary', 'X-Authcache-Key');
-    authcache_backend_init('authcache_varnish', $vary_header);
-  }
-}
-
-/**
- * Invoke hook_authcache_varnish_request_validate.
- *
- * Return TRUE if no implementation of hook_authcache_varnish_request_validate
- * returned FALSE.
- */
-function authcache_varnish_request_validate() {
-  foreach (module_implements('authcache_varnish_request_validate') as $module) {
-    $function = $module . '_authcache_varnish_request_validate';
-    $access = $function();
-    if ($access === FALSE) {
-      return FALSE;
+    if (isset($_SERVER['HTTP_X_AUTHCACHE_KEY'])) {
+      $initial_key = $_SERVER['HTTP_X_AUTHCACHE_KEY'];
     }
-  }
+    else {
+      $initial_key = authcache_backend_anonymous_key();
+    }
 
-  return TRUE;
+    $vary_header = variable_get('authcache_varnish_vary', 'X-Authcache-Key');
+    authcache_backend_init('authcache_varnish', $vary_header, $initial_key);
+  }
 }
 
 /**
- * Implements hook_authcache_varnish_request_validate().
+ * Ensure that a request came in through the reverse proxy.
  *
  * Examine the X-Varnish request header and return TRUE if the header is
  * present. Otherwise return FALSE.
  */
-function authcache_varnish_authcache_varnish_request_validate() {
+function authcache_varnish_request_validate() {
   if (variable_get('authcache_varnish_validate_reverse_proxy_address', TRUE)) {
     // Fail if reverse proxy is not configured in settings.php.
     if (!variable_get('reverse_proxy', 0)) {
@@ -66,12 +55,14 @@ function authcache_varnish_authcache_varnish_request_validate() {
   if (!empty($request_key) && !isset($_SERVER[$request_key])) {
     return FALSE;
   }
+
+  return TRUE;
 }
 
 /**
  * Implements hook_authcache_backend_cache_save().
  */
-function authcache_varnish_authcache_backend_cache_save($data, $headers, $created) {
+function authcache_varnish_authcache_backend_cache_save($data, $headers, $page_compressed) {
   // Nothing to do. However a hook-implementation is required to signal the
   // main module that a cache backend exists.
 }

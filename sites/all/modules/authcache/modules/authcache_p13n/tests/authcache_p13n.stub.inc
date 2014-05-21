@@ -565,13 +565,15 @@ class AuthcacheP13nTestRequestRouterStub implements AuthcacheP13nRequestRouterIn
       return FALSE;
     }
     else {
-      return url('http://example.com/authcache.php', array(
-        'absolute' => TRUE,
-        'query' => array(
-          'r' => $route_id,
-          'a' => $arg ?: '',
+      return array(
+        'path' => 'http://example.com/authcache.php',
+        'options' => array(
+          'query' => array(
+            'r' => $route_id,
+            'a' => $arg ?: '',
+          ),
         ),
-      ));
+      );
     }
   }
 
@@ -638,13 +640,15 @@ class AuthcacheP13nTestRequestUrlGeneratorStub implements AuthcacheP13nRequestUr
       return FALSE;
     }
     else {
-      return url('http://example.com/authcache.php', array(
-        'absolute' => TRUE,
-        'query' => array(
-          'r' => $route_id,
-          'a' => $arg ?: '',
+      return array(
+        'path' => 'http://example.com/authcache.php',
+        'options' => array(
+          'query' => array(
+            'r' => $route_id,
+            'a' => $arg ?: '',
+          ),
         ),
-      ));
+      );
     }
   }
 }

@@ -14,6 +14,7 @@ tracker*
 comment/edit*
 civicrm*
 cart*
+checkout*
 system/files/*
 system/temporary*
 file/ajax/*
@@ -123,9 +124,6 @@ function authcache_init() {
     ),
   ), 'setting');
 
-  // Remember original session id.
-  _authcache_original_session_id(TRUE);
-
   if (!authcache_excluded()) {
     // Remember original output buffering level.
     _authcache_original_ob_level(TRUE);
@@ -159,13 +157,11 @@ function authcache_exit($destination = NULL) {
   }
 
   // Set/unset authcache key for this user.
-  $current_session = session_id();
-  $previous_session = _authcache_original_session_id();
-  if ((!empty($user->uid) || !empty($_SESSION)) && authcache_account_allows_caching()) {
-    module_invoke_all('authcache_key_ensure_present', authcache_key(), authcache_key_lifetime(), $current_session, $previous_session);
-  }
-  else {
-    module_invoke_all('authcache_key_ensure_absent', $current_session, $previous_session);
+  $authcache_key = authcache_key();
+  if ($authcache_key != authcache_backend_initial_key()) {
+    $has_session = (!empty($user->uid) || !empty($_SESSION));
+    $lifetime = authcache_key_lifetime();
+    module_invoke_all('authcache_backend_key_set', $authcache_key, $lifetime, $has_session);
   }
 
   // Fix cookies if necessary.
@@ -577,21 +573,14 @@ function authcache_user_key($properties, $superuser = FALSE) {
  * @see hook_authcache_key_properties_alter()
  */
 function authcache_key() {
-  global $base_root, $user;
+  global $user;
 
   if ($user->uid) {
     // Calculate the key for logged in users from key-properties.
     $key = authcache_user_key(authcache_key_properties(), $user->uid == 1);
   }
   else {
-    // Generate base-key for anonymous users.
-    $generator = variable_get('authcache_key_generator');
-    if (is_callable($generator)) {
-      $key = call_user_func($generator);
-    }
-    else {
-      $key = $base_root;
-    }
+    $key = authcache_backend_anonymous_key();
   }
 
   return $key;
@@ -734,8 +723,12 @@ function authcache_get_roles($all_roles = FALSE) {
  * This should normally return the string 'text/html' unless another module
  * has overridden the content type.
  */
-function _authcache_get_content_type($default = NULL) {
-  $params = explode(';', drupal_get_http_header('content-type'));
+function authcache_get_content_type($header = NULL) {
+  if (!isset($header)) {
+    $header = drupal_get_http_header('content-type');
+  }
+
+  $params = explode(';', $header);
   $params = array_map('trim', $params);
   $mime = array_shift($params);
 
@@ -776,19 +769,6 @@ function _authcache_default_pagecaching() {
       ),
     ),
   );
-}
-
-/**
- * Utility function used to memoize the session_id in use during hook_init.
- */
-function _authcache_original_session_id($set = FALSE) {
-  $original_id = &drupal_static(__FUNCTION__);
-
-  if ($set && isset($_COOKIE[session_name()])) {
-    $original_id = session_id();
-  }
-
-  return $original_id;
 }
 
 /**
@@ -963,7 +943,7 @@ function authcache_authcache_preclude() {
  */
 function authcache_authcache_cancel() {
   // Check content-type.
-  $content_type = _authcache_get_content_type();
+  $content_type = authcache_get_content_type();
   $allowed_mimetypes = preg_split('/(\r\n?|\n)/', variable_get('authcache_mimetype', AUTHCACHE_MIMETYPE_DEFAULT), -1, PREG_SPLIT_NO_EMPTY);
   if (!in_array($content_type['mimetype'], $allowed_mimetypes)) {
     return t('Only cache allowed HTTP content types (HTML, JS, etc)');
@@ -998,7 +978,7 @@ function authcache_authcache_cancel() {
 
       default:
         // Let user know there is PHP error and return.
-        return t('PHP Error: @error', array('@error' => error_get_last()));
+        return t('PHP Error: @error', array('@error' => $error['message']));
     }
   }
 
@@ -1018,59 +998,6 @@ function authcache_authcache_cookie($account) {
   $cookies['nocache']['value'] = 1;
 
   return $cookies;
-}
-
-/**
- * Implements hook_authcache_key_ensure_present().
- */
-function authcache_authcache_key_ensure_present($key, $lifetime, $current_session, $previous_session) {
-  switch (variable_get('authcache_key_method', 'cache')) {
-    case 'cache':
-      if ($previous_session && $previous_session != $current_session) {
-        cache_clear_all($previous_session, 'cache_authcache_key');
-      }
-
-      // Update cached key if necessary.
-      $cache = cache_get($current_session, 'cache_authcache_key');
-      if ($cache === FALSE || $cache->expire > 0 && $cache->expire < REQUEST_TIME || $cache->data != $key) {
-        $expires = $lifetime ? REQUEST_TIME + $lifetime : CACHE_TEMPORARY;
-        cache_set($current_session, $key, 'cache_authcache_key', $expires);
-      }
-      break;
-
-    case 'cookie':
-      authcache_add_cookie(array(
-        'authcache' => array(
-          'present' => TRUE,
-          'httponly' => TRUE,
-          'value' => $key,
-          'lifetime' => $lifetime,
-        ),
-      ));
-      break;
-  }
-}
-
-/**
- * Implements hook_authcache_key_ensure_absent().
- */
-function authcache_authcache_key_ensure_absent($current_session, $previous_session) {
-  switch (variable_get('authcache_key_method', 'cache')) {
-    case 'cache':
-      if ($previous_session) {
-        cache_clear_all($previous_session, 'cache_authcache_key');
-      }
-      break;
-
-    case 'cookie':
-      authcache_add_cookie(array(
-        'authcache' => array(
-          'present' => FALSE,
-          'httponly' => TRUE,
-        ),
-      ));
-      break;
-  }
 }
 
 /**

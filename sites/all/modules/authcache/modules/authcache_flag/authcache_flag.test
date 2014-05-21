@@ -352,7 +352,6 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
 
     // Load flag and change it such that it will be displayed as a pseudo field.
     $flag = flag_get_flag($this->userFlag->name);
-    debug($flag);
     $flag->show_in_links = array();
     $flag->show_as_field = 1;
     $flag->show_on_profile = 0;
@@ -404,7 +403,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     $this->assertTrue($url);
 
     // Fetch (both nodes unflagged).
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assert(isset($result[$partial]));
     $this->assertEqual(array($this->node1->nid, $this->node2->nid), array_keys($result[$partial]));
 
@@ -417,7 +416,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     $this->clickLink(t('Flag this item'));
 
     // Refetch (first node unflagged, second node flagged).
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assert(isset($result[$partial]));
     $this->assertEqual(array($this->node1->nid, $this->node2->nid), array_keys($result[$partial]));
 
@@ -430,7 +429,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     $this->clickLink(t('Unflag this item'));
 
     // Refetch (first node unflagged, second node flagged).
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assert(isset($result[$partial]));
     $this->assertEqual(array($this->node1->nid, $this->node2->nid), array_keys($result[$partial]));
 
@@ -455,7 +454,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     $this->assertTrue($url);
 
     // Fetch (both nodes unflagged).
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assert(isset($result[$partial]));
     $this->assertEqual(array($this->node1->nid, $this->node2->nid), array_keys($result[$partial]));
 
@@ -468,7 +467,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     $this->clickLink(t('Flag this item'));
 
     // Refetch (first node unflagged, second node flagged).
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assert(isset($result[$partial]));
     $this->assertEqual(array($this->node1->nid, $this->node2->nid), array_keys($result[$partial]));
 
@@ -491,7 +490,7 @@ class AuthcacheFlagTest extends DrupalWebTestCase {
     ));
     $this->assertTrue($url);
 
-    $result = $this->drupalGetAJAX($url, array(), array('X-Authcache: 1'));
+    $result = $this->drupalGetAJAX($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertResponse(403);
     $this->assertFalse($result);
   }

@@ -305,7 +305,7 @@ class AuthcacheBlockTest extends DrupalWebTestCase {
     $request_id = 'frag/block/' . $block_id;
     $url = authcache_p13n_request_get_callback($request_id, $block_id);
     $this->assertTrue($url);
-    $this->drupalGet($url, array(), array('X-Authcache: 1'));
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertText($block->title);
   }
 }

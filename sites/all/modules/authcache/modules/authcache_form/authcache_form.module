@@ -36,25 +36,44 @@ function authcache_form_authcache_p13n_fragment() {
       ),
       'cache maxage' => ini_get('session.cookie_lifetime') ?: 0,
     ),
-    'form-build-id' => array(
-      'admin name' => t('Build ID'),
-      'admin group' => t('Form'),
-      'admin description' => t('Retrieve build id for cached forms (especially ajax enabled forms).'),
-      'admin path' => 'admin/config/system/authcache/forms',
-      'fragment' => array(
-        '#class' => 'AuthcacheFormBuildIdFragment',
-      ),
-      'cache maxage' => 21600,
-    ),
   );
+}
+
+/**
+ * Implements hook_cacheobject_load().
+ */
+function authcache_form_cacheobject_load($objects, $cids, $bin) {
+  if ($bin == 'cache_form') {
+    foreach ($objects as $object) {
+      // Check the authcache key and restore the per-user cache_token.
+      if (isset($object->data['#cache_token_authcache_key'])) {
+        if ($object->data['#cache_token_authcache_key'] == authcache_key()) {
+          $object->data['#cache_token'] = drupal_get_token();
+        }
+      }
+    }
+  }
 }
 
 /**
  * Implements hook_cacheobject_presave().
  */
 function authcache_form_cacheobject_presave($object, $cid, $bin) {
-  // Extend the expiry period for prototype forms used in ajax enabled forms.
-  if ($bin == 'cache_form' && (strpos($cid, 'form_authcache-') === 0 || strpos($cid, 'form_state_authcache-') === 0)) {
+  if ($bin == 'cache_form' && authcache_page_is_cacheable()) {
+    // Remove the per-user #cache_token and replace it with the authcache key.
+    // When the form is subsequently retrieved from the cache, the recorded key
+    // is compared to the one of the logged in user. If they match the cache
+    // token is restored, such that the token validation code in form_get_cache
+    // passes.
+    if (!empty($object->data['#cache_token'])) {
+      $object->data['#cache_token_authcache_key'] = authcache_key();
+      unset($object->data['#cache_token']);
+    }
+    else {
+      unset($object->data['#cache_token_authcache_key']);
+    }
+
+    // Extend the expiry period for cached forms.
     $ttl = variable_get('authcache_form_cache_lifespan', 604800);
     if ($ttl == 'custom') {
       $ttl = variable_get('authcache_form_cache_lifespan_custom');
@@ -68,17 +87,22 @@ function authcache_form_cacheobject_presave($object, $cid, $bin) {
  * Implements hook_form_alter().
  */
 function authcache_form_form_alter(&$form, &$form_state, $form_id) {
-  if (_authcache_form_allow_notoken($form_id)) {
-    // Removal of form token is allowed on this form. When removing form tokens
-    // we need to do that on both cacheable as well as uncacheable versions of
-    // the page. Otherwise form-processing will not work as soon as the form is
-    // submitted.
-    unset($form['#token']);
-    unset($form['form_token']);
-    authcache_element_set_cacheable($form);
-  }
-  elseif (_authcache_form_allow_p13n($form_id) && authcache_page_is_cacheable()) {
-    $form['#after_build'][] = '_authcache_form_after_build';
+  if (authcache_page_is_cacheable()) {
+    // Set the immutable flag on the form.
+    $form_state['build_info']['immutable'] = TRUE;
+
+    if (_authcache_form_allow_notoken($form_id)) {
+      // Removal of form token is allowed on this form. When removing form
+      // tokens we need to do that on both cacheable as well as uncacheable
+      // versions of the page. Otherwise form-processing will not work as soon
+      // as the form is submitted.
+      unset($form['#token']);
+      unset($form['form_token']);
+      authcache_element_set_cacheable($form);
+    }
+    elseif (_authcache_form_allow_p13n($form_id)) {
+      $form['#after_build'][] = '_authcache_form_after_build';
+    }
   }
 }
 
@@ -86,30 +110,18 @@ function authcache_form_form_alter(&$form, &$form_state, $form_id) {
  * Form after_build callback for forms on cacheable pages.
  *
  * Setup form such that the per-session form token (used for CSRF protection)
- * can be retrieved separately. Some forms (especially Ajax-enabled ones)
- * require the form cache. In this case a prototype form build is stored into
- * the form-cache which can be used to create new builds when necessary.
+ * can be retrieved separately.
  *
  * @see drupal_build_form()
  */
 function _authcache_form_after_build($form, $form_state) {
-  // Check whether another module already took the form over.
-  if (authcache_page_is_cacheable() && !authcache_element_is_cacheable($form)) {
-    // Store prototype-form builds in the form cache if necessary.
-    if (!empty($form['form_build_id'])) {
-      // Replace hidden form_build_id input with personalization request
-      // fragment.
-      authcache_p13n_attach($form['form_build_id'], array(
-        '#theme' => 'authcache_p13n_fragment',
-        '#fragment' => 'form-build-id',
-        '#param' => $form['#build_id'],
-        '#fallback' => 'cancel',
-      ));
+  global $user;
 
-      // Prepend 'authcache-' to the build-id. Those builds will serve as
-      // prototypes when generating new forms for other users from within
-      // AuthcacheFormBuildIdFragment.
-      $form['#build_id'] = 'authcache-' . $form['#build_id'];
+  if (authcache_page_is_cacheable() && !authcache_element_is_cacheable($form)) {
+    // Cached forms break for authenticated users unless Cache Object API is
+    // configured properly.
+    if (!empty($form['form_build_id']) && $user->uid && !module_exists('cacheobject')) {
+      authcache_cancel(t('Cached form on the page (likely Ajax enabled). Download and configure the Cache Object API module.'));
     }
 
     if (!empty($form['form_token'])) {

@@ -41,8 +41,15 @@ function authcache_boost_module_implements_alter(&$implementations, $hook) {
  * Implements hook_boot().
  */
 function authcache_boost_boot() {
+  if (isset($_COOKIE['authcache'])) {
+    $initial_key = $_COOKIE['authcache'];
+  }
+  else {
+    $initial_key = authcache_backend_anonymous_key();
+  }
+
   $vary_header = variable_get('authcache_boost_vary', 'Cookie');
-  authcache_backend_init('authcache_boost', $vary_header);
+  authcache_backend_init('authcache_boost', $vary_header, $initial_key);
 }
 
 /**
@@ -52,7 +59,8 @@ function authcache_boost_init() {
   global $conf, $_boost;
 
   // Force boost_normal_dir.
-  $conf['boost_normal_dir'] = authcache_is_default_key() ? BOOST_NORMAL_DIR : authcache_key();
+  $authcache_key = authcache_key();
+  $conf['boost_normal_dir'] = authcache_is_default_key($authcache_key) ? BOOST_NORMAL_DIR : $authcache_key;
 
   // Enforce addition of a vary-cookie directive into the .htaccess file within
   // the boost cache directory.
@@ -84,11 +92,26 @@ function authcache_boost_is_cacheable($parts) {
 /**
  * Implements hook_authcache_backend_cache_save().
  */
-function authcache_boost_authcache_backend_cache_save($body, $headers, $created) {
+function authcache_boost_authcache_backend_cache_save($body, $headers, $page_compressed) {
   // Cache and output.
   drupal_page_is_cacheable(TRUE);
   boost_exit();
   drupal_page_is_cacheable(FALSE);
+}
+
+
+/**
+ * Implements hook_authcache_backend_key_set().
+ */
+function authcache_boost_authcache_backend_key_set($key, $lifetime, $has_session) {
+  authcache_add_cookie(array(
+    'authcache' => array(
+      'present' => $has_session,
+      'httponly' => TRUE,
+      'value' => $key,
+      'lifetime' => $lifetime,
+    ),
+  ));
 }
 
 

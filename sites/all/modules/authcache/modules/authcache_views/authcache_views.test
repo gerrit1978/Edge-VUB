@@ -249,7 +249,7 @@ class AuthcacheViewsTest extends DrupalWebTestCase {
     $_GET = $orig_get;
 
     $this->assertTrue($url);
-    $this->drupalGet($url, array(), array('X-Authcache: 1'));
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertText($this->nodeByAnon->title, 'Test node authored by anonymous user in the list');
     $this->assertText($this->nodeByAdmin->title, 'Test node authored by admin user in the list');
 
@@ -260,7 +260,7 @@ class AuthcacheViewsTest extends DrupalWebTestCase {
     $_GET = $orig_get;
 
     $this->assertTrue($url);
-    $this->drupalGet($url, array(), array('X-Authcache: 1'));
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertText($this->nodeByAnon->title, 'Test node authored by anonymous user in the list');
     $this->assertNoText($this->nodeByAdmin->title, 'Test node authored by admin user not in the list');
 
@@ -271,7 +271,7 @@ class AuthcacheViewsTest extends DrupalWebTestCase {
     $_GET = $orig_get;
 
     $this->assertTrue($url);
-    $this->drupalGet($url, array(), array('X-Authcache: 1'));
+    $this->drupalGet($GLOBALS['base_root'] . $url['path'], $url['options'], array('X-Authcache: 1'));
     $this->assertNoText($this->nodeByAnon->title, 'Test node authored by anonymous user not in the list');
     $this->assertText($this->nodeByAdmin->title, 'Test node authored by admin user in the list');
   }

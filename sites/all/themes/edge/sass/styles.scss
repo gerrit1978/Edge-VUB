@@ -18,8 +18,158 @@
 /* Component (SMACSS module) rules */
 @import "components/misc";
 // Optionally, add your own components here.
+@import "components/variables";
 @import "print";
 
 /* SMACSS theme rules */
 /* @import "theme-A"; */
 /* @import "theme-B"; */
+
+/**
+ * General elements
+ */
+a {
+  text-decoration: none;
+  color: $darkGrey;
+  border-bottom: 1px solid $lightGrey;
+  &:hover {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+.form-text {
+  border: 2px solid $green;
+}
+
+/**
+ * Header 
+ */
+#header {
+  border-top: 5px solid $green;
+  .inner {
+    position: relative;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+	  #block-search-form {
+	    position: absolute;
+	    top: 2px;
+	    right: 0;
+	    .form-text {
+	      height: 30px;
+	      line-height: 30px;
+	    }
+	    .form-submit {
+	      background: url(../images/sprite.png) no-repeat left top;
+	      border: none;
+	      height: 30px;
+	      width: 33px;
+	      text-indent: -999em;
+	      cursor: pointer;
+	    }
+	  }
+  }
+}
+
+/**
+ * Main menu
+ */
+#navigation {
+  padding: 0;
+  background: $black;
+  ul {
+    position: absolute;
+    bottom: 3px;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 0;
+      margin-right: 30px;
+      &.first {
+        margin-left: 10px;
+      }
+		  a {
+		    color: $darkGrey;
+		    border-bottom: none;
+		    text-transform: uppercase;
+		    &:hover,&.active {
+		      color: $green;
+		    }
+		  }
+    }
+  }
+}
+
+/** 
+ * Columns
+ */
+.three-columns {
+  $zen-column-count: 24;
+  .column-left {
+    @include zen-grid-item(8, 1);
+  }
+  .column-center {
+    text-align: center;
+    @include zen-grid-item(8, 9);
+  }
+  .column-right {
+    text-align: right;
+    @include zen-grid-item(8, 17);
+  }
+}
+
+/**
+ * Footer
+ * Sticky footer: see http://www.cssstickyfooter.com/
+ */
+* {
+  margin: 0;
+  padding: 0;
+} 
+
+/* must declare 0 margins on everything, also for main layout components use padding, not 
+vertical margins (top and bottom) to add spacing, else those margins get added to total height 
+and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
+
+html, body {
+  height: 100%;
+}
+
+#page-wrapper {
+  min-height: 100%;
+}
+
+#page-wrapper-inner {
+  overflow:auto;
+	padding-bottom: 50px;
+}
+
+#footer {
+  position: relative;
+	margin-top: -50px; /* negative value of footer height */
+	height: 50px;
+	clear:both;
+  border-bottom: 5px solid $green;
+	font-size: 0.875em;
+	p {
+	  margin: 0;
+	  padding: 0;
+	}
+	.block {
+	  max-width: 1140px;
+	  margin-left: auto;
+	  margin-right: auto;
+	  margin-bottom: 0;
+	}
+}
+
+/*Opera Fix*/
+body:before {/* thanks to Maleika (Kohoutec)*/
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/* thank you Erik J - negate effect of float*/
+}
