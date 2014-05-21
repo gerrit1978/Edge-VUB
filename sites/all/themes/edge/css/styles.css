@@ -1815,17 +1815,18 @@ a:hover {
 #content {
   padding-left: 0;
   padding-right: 0;
+  margin-top: 10px;
 }
 
 /**
  * Header 
  */
-/* line 52, ../sass/styles.scss */
+/* line 53, ../sass/styles.scss */
 #header {
   height: 125px;
   border-top: 5px solid #a1b202;
 }
-/* line 56, ../sass/styles.scss */
+/* line 57, ../sass/styles.scss */
 #header h1#site-name a {
   text-indent: -999em;
   width: 190px;
@@ -1834,25 +1835,25 @@ a:hover {
   display: block;
   border: none;
 }
-/* line 65, ../sass/styles.scss */
+/* line 66, ../sass/styles.scss */
 #header .inner {
   position: relative;
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 70, ../sass/styles.scss */
+/* line 71, ../sass/styles.scss */
 #header .inner #block-search-form {
   position: absolute;
   top: 4px;
   right: 0;
 }
-/* line 74, ../sass/styles.scss */
+/* line 75, ../sass/styles.scss */
 #header .inner #block-search-form .form-text {
   height: 30px;
   line-height: 30px;
 }
-/* line 78, ../sass/styles.scss */
+/* line 79, ../sass/styles.scss */
 #header .inner #block-search-form .form-submit {
   background: url(../images/sprite.png) no-repeat left top;
   border: none;
@@ -1865,10 +1866,9 @@ a:hover {
 /**
  * Main menu
  */
-/* line 93, ../sass/styles.scss */
+/* line 94, ../sass/styles.scss */
 #navigation {
   padding: 0;
-  margin-bottom: 10px;
   background: black;
 }
 /* line 97, ../sass/styles.scss */
