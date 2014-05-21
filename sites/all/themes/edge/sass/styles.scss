@@ -47,7 +47,18 @@ a {
  * Header 
  */
 #header {
+  height: 125px;
   border-top: 5px solid $green;
+  h1#site-name {
+    a {
+	    text-indent: -999em;
+	    width: 190px;
+	    height: 112px;
+	    background: url(../images/logo.png);    
+      display: block;
+      border: none;
+    }
+  }
   .inner {
     position: relative;
     max-width: 1140px;
@@ -55,7 +66,7 @@ a {
     margin-right: auto;
 	  #block-search-form {
 	    position: absolute;
-	    top: 2px;
+	    top: 4px;
 	    right: 0;
 	    .form-text {
 	      height: 30px;
