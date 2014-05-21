@@ -1868,32 +1868,33 @@ a:hover {
 /* line 93, ../sass/styles.scss */
 #navigation {
   padding: 0;
+  margin-bottom: 10px;
   background: black;
 }
-/* line 96, ../sass/styles.scss */
+/* line 97, ../sass/styles.scss */
 #navigation ul {
   position: absolute;
   bottom: 3px;
   margin: 0;
   padding: 0;
 }
-/* line 101, ../sass/styles.scss */
+/* line 102, ../sass/styles.scss */
 #navigation ul li {
   margin: 0;
   padding: 0;
   margin-right: 30px;
 }
-/* line 105, ../sass/styles.scss */
+/* line 106, ../sass/styles.scss */
 #navigation ul li.first {
   margin-left: 10px;
 }
-/* line 108, ../sass/styles.scss */
+/* line 109, ../sass/styles.scss */
 #navigation ul li a {
   color: #767676;
   border-bottom: none;
   text-transform: uppercase;
 }
-/* line 112, ../sass/styles.scss */
+/* line 113, ../sass/styles.scss */
 #navigation ul li a:hover, #navigation ul li a.active {
   color: #a1b202;
 }
@@ -1901,14 +1902,14 @@ a:hover {
 /** 
  * Columns
  */
-/* line 125, ../sass/styles.scss */
+/* line 126, ../sass/styles.scss */
 .three-columns .column-left {
   float: left;
   width: 33.33333%;
   margin-left: 0%;
   margin-right: -33.33333%;
 }
-/* line 128, ../sass/styles.scss */
+/* line 129, ../sass/styles.scss */
 .three-columns .column-center {
   text-align: center;
   float: left;
@@ -1916,7 +1917,7 @@ a:hover {
   margin-left: 33.33333%;
   margin-right: -66.66667%;
 }
-/* line 132, ../sass/styles.scss */
+/* line 133, ../sass/styles.scss */
 .three-columns .column-right {
   text-align: right;
   float: left;
@@ -1926,14 +1927,14 @@ a:hover {
 }
 
 /* Front page */
-/* line 140, ../sass/styles.scss */
+/* line 141, ../sass/styles.scss */
 .front .visual {
   position: relative;
   height: 580px;
   background: red;
   margin-bottom: 30px;
 }
-/* line 145, ../sass/styles.scss */
+/* line 146, ../sass/styles.scss */
 .front .visual .block {
   margin: 0;
   position: absolute;
@@ -1941,27 +1942,27 @@ a:hover {
   width: 265px;
   background: url(../images/bg-white.png);
 }
-/* line 151, ../sass/styles.scss */
+/* line 152, ../sass/styles.scss */
 .front .visual .block.block-working-papers {
   left: 0;
   top: 200px;
 }
-/* line 155, ../sass/styles.scss */
+/* line 156, ../sass/styles.scss */
 .front .visual .block.block-visiting-fellows {
   left: 285px;
   top: 0;
 }
-/* line 159, ../sass/styles.scss */
+/* line 160, ../sass/styles.scss */
 .front .visual .block.block-news {
   left: 570px;
   bottom: 0;
 }
-/* line 163, ../sass/styles.scss */
+/* line 164, ../sass/styles.scss */
 .front .visual .block.block-gallery {
   right: 0;
   top: 25px;
 }
-/* line 167, ../sass/styles.scss */
+/* line 168, ../sass/styles.scss */
 .front .visual .block a {
   border: none;
   display: block;
@@ -1970,11 +1971,11 @@ a:hover {
   color: #a1b202;
   font-size: 1.25em;
 }
-/* line 174, ../sass/styles.scss */
+/* line 175, ../sass/styles.scss */
 .front .visual .block a:hover {
   color: #ababab;
 }
-/* line 177, ../sass/styles.scss */
+/* line 178, ../sass/styles.scss */
 .front .visual .block a span {
   position: absolute;
   bottom: 5px;
@@ -1985,7 +1986,7 @@ a:hover {
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 191, ../sass/styles.scss */
+/* line 192, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -1994,23 +1995,23 @@ a:hover {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 200, ../sass/styles.scss */
+/* line 201, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 204, ../sass/styles.scss */
+/* line 205, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 208, ../sass/styles.scss */
+/* line 209, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 50px;
 }
 
-/* line 213, ../sass/styles.scss */
+/* line 214, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -50px;
@@ -2020,12 +2021,12 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 220, ../sass/styles.scss */
+/* line 221, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 224, ../sass/styles.scss */
+/* line 225, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
@@ -2034,7 +2035,7 @@ html, body {
 }
 
 /*Opera Fix*/
-/* line 233, ../sass/styles.scss */
+/* line 234, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";
