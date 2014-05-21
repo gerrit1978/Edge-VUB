@@ -34,6 +34,7 @@ a {
   border-bottom: 1px solid $lightGrey;
   &:hover {
     color: $black;
+    border-bottom: 1px solid $black;
     text-decoration: none;
   }
 }

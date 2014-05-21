@@ -1804,10 +1804,11 @@ a {
 /* line 35, ../sass/styles.scss */
 a:hover {
   color: black;
+  border-bottom: 1px solid black;
   text-decoration: none;
 }
 
-/* line 41, ../sass/styles.scss */
+/* line 42, ../sass/styles.scss */
 .form-text {
   border: 2px solid #a1b202;
 }
@@ -1815,29 +1816,29 @@ a:hover {
 /**
  * Header 
  */
-/* line 48, ../sass/styles.scss */
+/* line 49, ../sass/styles.scss */
 #header {
   border-top: 5px solid #a1b202;
 }
-/* line 50, ../sass/styles.scss */
+/* line 51, ../sass/styles.scss */
 #header .inner {
   position: relative;
   max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 55, ../sass/styles.scss */
+/* line 56, ../sass/styles.scss */
 #header .inner #block-search-form {
   position: absolute;
   top: 2px;
   right: 0;
 }
-/* line 59, ../sass/styles.scss */
+/* line 60, ../sass/styles.scss */
 #header .inner #block-search-form .form-text {
   height: 30px;
   line-height: 30px;
 }
-/* line 63, ../sass/styles.scss */
+/* line 64, ../sass/styles.scss */
 #header .inner #block-search-form .form-submit {
   background: url(../images/sprite.png) no-repeat left top;
   border: none;
@@ -1850,35 +1851,35 @@ a:hover {
 /**
  * Main menu
  */
-/* line 78, ../sass/styles.scss */
+/* line 79, ../sass/styles.scss */
 #navigation {
   padding: 0;
   background: black;
 }
-/* line 81, ../sass/styles.scss */
+/* line 82, ../sass/styles.scss */
 #navigation ul {
   position: absolute;
   bottom: 3px;
   margin: 0;
   padding: 0;
 }
-/* line 86, ../sass/styles.scss */
+/* line 87, ../sass/styles.scss */
 #navigation ul li {
   margin: 0;
   padding: 0;
   margin-right: 30px;
 }
-/* line 90, ../sass/styles.scss */
+/* line 91, ../sass/styles.scss */
 #navigation ul li.first {
   margin-left: 10px;
 }
-/* line 93, ../sass/styles.scss */
+/* line 94, ../sass/styles.scss */
 #navigation ul li a {
   color: #767676;
   border-bottom: none;
   text-transform: uppercase;
 }
-/* line 97, ../sass/styles.scss */
+/* line 98, ../sass/styles.scss */
 #navigation ul li a:hover, #navigation ul li a.active {
   color: #a1b202;
 }
@@ -1886,14 +1887,14 @@ a:hover {
 /** 
  * Columns
  */
-/* line 110, ../sass/styles.scss */
+/* line 111, ../sass/styles.scss */
 .three-columns .column-left {
   float: left;
   width: 33.33333%;
   margin-left: 0%;
   margin-right: -33.33333%;
 }
-/* line 113, ../sass/styles.scss */
+/* line 114, ../sass/styles.scss */
 .three-columns .column-center {
   text-align: center;
   float: left;
@@ -1901,7 +1902,7 @@ a:hover {
   margin-left: 33.33333%;
   margin-right: -66.66667%;
 }
-/* line 117, ../sass/styles.scss */
+/* line 118, ../sass/styles.scss */
 .three-columns .column-right {
   text-align: right;
   float: left;
@@ -1914,7 +1915,7 @@ a:hover {
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 127, ../sass/styles.scss */
+/* line 128, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -1923,23 +1924,23 @@ a:hover {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 136, ../sass/styles.scss */
+/* line 137, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 140, ../sass/styles.scss */
+/* line 141, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 144, ../sass/styles.scss */
+/* line 145, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 50px;
 }
 
-/* line 149, ../sass/styles.scss */
+/* line 150, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -50px;
@@ -1949,12 +1950,12 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 156, ../sass/styles.scss */
+/* line 157, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 160, ../sass/styles.scss */
+/* line 161, ../sass/styles.scss */
 #footer .block {
   max-width: 1140px;
   margin-left: auto;
@@ -1963,7 +1964,7 @@ html, body {
 }
 
 /*Opera Fix*/
-/* line 169, ../sass/styles.scss */
+/* line 170, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";
