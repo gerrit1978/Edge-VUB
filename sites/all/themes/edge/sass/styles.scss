@@ -47,6 +47,12 @@ a {
   margin-top: 10px;
 }
 
+h1#page-title,
+h2#page-title {
+  color: $green;
+  text-transform: uppercase;
+}
+
 /**
  * Header 
  */
@@ -179,6 +185,54 @@ a {
           position: absolute;
           bottom: 5px;
           left: 5px;
+        }
+      }
+    }
+  }
+}
+
+/* Team page */
+.view-team-members {
+  ul.users {
+    margin: 0;
+    padding: 0;
+    li.user {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      width: 265px;
+      margin-right: 21px;
+      float: left;
+      background: $veryLightGrey;
+      position: relative;
+      &.last {
+        margin-right: 0;
+      }
+      a {
+        border: none;
+      }
+      .thumbnail {
+        float: left;
+        img {
+          display: block;
+        }
+      }
+      .main {
+        margin-left: 85px;
+        font-weight: bold;
+        font-size: 0.875em;
+      }
+      .link {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        a {
+          display: block;
+          background: url(../images/sprite.png) left -34px;
+          width: 19px;
+          height: 17px;
+          text-indent: -999em;
+          overflow: hidden;
         }
       }
     }

@@ -127,7 +127,7 @@ $zen-auto-include-item-base: false;
     /* Start a new row and span all 3 columns. */
     .region-sidebar-second {
       @include zen-grid-item(3, 1);
-      @include zen-nested-container(); // Since we're making every block in this region be a grid item.
+      @include zen-nested-container(); // Since we're making every block in this region be a grid item. 
       @include zen-clear();
 
       /* Apply the shared properties of grid items in a single, efficient ruleset. */
@@ -156,7 +156,7 @@ $zen-auto-include-item-base: false;
  */
 @media all and (min-width: 960px) {
 
-  $zen-column-count: 5;
+  $zen-column-count: 4;
 
   /**
    * The layout when there is only one sidebar, the left one.
@@ -164,7 +164,7 @@ $zen-auto-include-item-base: false;
   .sidebar-first {
     /* Span 4 columns, starting in 2nd column from left. */
     #content {
-      @include zen-grid-item(4, 2);
+      @include zen-grid-item(3, 2);
     }
 
     /* Span 1 column, starting in 1st column from left. */

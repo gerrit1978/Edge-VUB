@@ -787,16 +787,16 @@ table {
   /* line 166, ../sass/layouts/_responsive.scss */
   .sidebar-first #content {
     float: left;
-    width: 80%;
-    margin-left: 20%;
+    width: 75%;
+    margin-left: 25%;
     margin-right: -100%;
   }
   /* line 171, ../sass/layouts/_responsive.scss */
   .sidebar-first .region-sidebar-first {
     float: left;
-    width: 20%;
+    width: 25%;
     margin-left: 0%;
-    margin-right: -20%;
+    margin-right: -25%;
   }
 
   /**
@@ -810,16 +810,16 @@ table {
   /* line 181, ../sass/layouts/_responsive.scss */
   .sidebar-second #content {
     float: left;
-    width: 80%;
+    width: 100%;
     margin-left: 0%;
-    margin-right: -80%;
+    margin-right: -100%;
   }
   /* line 186, ../sass/layouts/_responsive.scss */
   .sidebar-second .region-sidebar-second {
     float: left;
-    width: 20%;
-    margin-left: 80%;
-    margin-right: -100%;
+    width: 25%;
+    margin-left: 100%;
+    margin-right: -125%;
   }
 
   /**
@@ -834,23 +834,23 @@ table {
   /* line 196, ../sass/layouts/_responsive.scss */
   .two-sidebars #content {
     float: left;
-    width: 60%;
-    margin-left: 20%;
-    margin-right: -80%;
+    width: 75%;
+    margin-left: 25%;
+    margin-right: -100%;
   }
   /* line 201, ../sass/layouts/_responsive.scss */
   .two-sidebars .region-sidebar-first {
     float: left;
-    width: 20%;
+    width: 25%;
     margin-left: 0%;
-    margin-right: -20%;
+    margin-right: -25%;
   }
   /* line 206, ../sass/layouts/_responsive.scss */
   .two-sidebars .region-sidebar-second {
     float: left;
-    width: 20%;
-    margin-left: 80%;
-    margin-right: -100%;
+    width: 25%;
+    margin-left: 100%;
+    margin-right: -125%;
   }
 }
 /* Component (SMACSS module) rules */
@@ -1134,7 +1134,7 @@ table {
 }
 
 /* line 275, ../sass/components/_misc.scss */
-.tabs-primary__tab, .tabs-secondary__tab,
+.tabs-primary__tab, .tabs-primary__tab.is-active, .tabs-secondary__tab,
 .tabs-secondary__tab.is-active {
   float: left;
   /* LTR */
@@ -1142,7 +1142,7 @@ table {
 }
 
 /* line 279, ../sass/components/_misc.scss */
-a.tabs-primary__tab-link, a.tabs-secondary__tab-link {
+a.tabs-primary__tab-link, a.tabs-primary__tab-link.is-active, a.tabs-secondary__tab-link, a.tabs-secondary__tab-link.is-active {
   border: 1px solid #e9e9e9;
   border-right: 0;
   border-bottom: 0;
@@ -1700,7 +1700,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1392218134');
+  background-image: url('../images/progress.gif?1376896851');
 }
 
 /**
@@ -1818,15 +1818,22 @@ a:hover {
   margin-top: 10px;
 }
 
+/* line 51, ../sass/styles.scss */
+h1#page-title,
+h2#page-title {
+  color: #a1b202;
+  text-transform: uppercase;
+}
+
 /**
  * Header 
  */
-/* line 53, ../sass/styles.scss */
+/* line 59, ../sass/styles.scss */
 #header {
   height: 125px;
   border-top: 5px solid #a1b202;
 }
-/* line 57, ../sass/styles.scss */
+/* line 63, ../sass/styles.scss */
 #header h1#site-name a {
   text-indent: -999em;
   width: 190px;
@@ -1835,25 +1842,25 @@ a:hover {
   display: block;
   border: none;
 }
-/* line 66, ../sass/styles.scss */
+/* line 72, ../sass/styles.scss */
 #header .inner {
   position: relative;
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 71, ../sass/styles.scss */
+/* line 77, ../sass/styles.scss */
 #header .inner #block-search-form {
   position: absolute;
   top: 4px;
   right: 0;
 }
-/* line 75, ../sass/styles.scss */
+/* line 81, ../sass/styles.scss */
 #header .inner #block-search-form .form-text {
   height: 30px;
   line-height: 30px;
 }
-/* line 79, ../sass/styles.scss */
+/* line 85, ../sass/styles.scss */
 #header .inner #block-search-form .form-submit {
   background: url(../images/sprite.png) no-repeat left top;
   border: none;
@@ -1866,35 +1873,35 @@ a:hover {
 /**
  * Main menu
  */
-/* line 94, ../sass/styles.scss */
+/* line 100, ../sass/styles.scss */
 #navigation {
   padding: 0;
   background: black;
 }
-/* line 97, ../sass/styles.scss */
+/* line 103, ../sass/styles.scss */
 #navigation ul {
   position: absolute;
   bottom: 3px;
   margin: 0;
   padding: 0;
 }
-/* line 102, ../sass/styles.scss */
+/* line 108, ../sass/styles.scss */
 #navigation ul li {
   margin: 0;
   padding: 0;
   margin-right: 30px;
 }
-/* line 106, ../sass/styles.scss */
+/* line 112, ../sass/styles.scss */
 #navigation ul li.first {
   margin-left: 10px;
 }
-/* line 109, ../sass/styles.scss */
+/* line 115, ../sass/styles.scss */
 #navigation ul li a {
   color: #767676;
   border-bottom: none;
   text-transform: uppercase;
 }
-/* line 113, ../sass/styles.scss */
+/* line 119, ../sass/styles.scss */
 #navigation ul li a:hover, #navigation ul li a.active {
   color: #a1b202;
 }
@@ -1902,14 +1909,14 @@ a:hover {
 /** 
  * Columns
  */
-/* line 126, ../sass/styles.scss */
+/* line 132, ../sass/styles.scss */
 .three-columns .column-left {
   float: left;
   width: 33.33333%;
   margin-left: 0%;
   margin-right: -33.33333%;
 }
-/* line 129, ../sass/styles.scss */
+/* line 135, ../sass/styles.scss */
 .three-columns .column-center {
   text-align: center;
   float: left;
@@ -1917,7 +1924,7 @@ a:hover {
   margin-left: 33.33333%;
   margin-right: -66.66667%;
 }
-/* line 133, ../sass/styles.scss */
+/* line 139, ../sass/styles.scss */
 .three-columns .column-right {
   text-align: right;
   float: left;
@@ -1927,14 +1934,14 @@ a:hover {
 }
 
 /* Front page */
-/* line 141, ../sass/styles.scss */
+/* line 147, ../sass/styles.scss */
 .front .visual {
   position: relative;
   height: 580px;
   background: red;
   margin-bottom: 30px;
 }
-/* line 146, ../sass/styles.scss */
+/* line 152, ../sass/styles.scss */
 .front .visual .block {
   margin: 0;
   position: absolute;
@@ -1942,27 +1949,27 @@ a:hover {
   width: 265px;
   background: url(../images/bg-white.png);
 }
-/* line 152, ../sass/styles.scss */
+/* line 158, ../sass/styles.scss */
 .front .visual .block.block-working-papers {
   left: 0;
   top: 200px;
 }
-/* line 156, ../sass/styles.scss */
+/* line 162, ../sass/styles.scss */
 .front .visual .block.block-visiting-fellows {
   left: 285px;
   top: 0;
 }
-/* line 160, ../sass/styles.scss */
+/* line 166, ../sass/styles.scss */
 .front .visual .block.block-news {
   left: 570px;
   bottom: 0;
 }
-/* line 164, ../sass/styles.scss */
+/* line 170, ../sass/styles.scss */
 .front .visual .block.block-gallery {
   right: 0;
   top: 25px;
 }
-/* line 168, ../sass/styles.scss */
+/* line 174, ../sass/styles.scss */
 .front .visual .block a {
   border: none;
   display: block;
@@ -1971,22 +1978,77 @@ a:hover {
   color: #a1b202;
   font-size: 1.25em;
 }
-/* line 175, ../sass/styles.scss */
+/* line 181, ../sass/styles.scss */
 .front .visual .block a:hover {
   color: #ababab;
 }
-/* line 178, ../sass/styles.scss */
+/* line 184, ../sass/styles.scss */
 .front .visual .block a span {
   position: absolute;
   bottom: 5px;
   left: 5px;
 }
 
+/* Team page */
+/* line 196, ../sass/styles.scss */
+.view-team-members ul.users {
+  margin: 0;
+  padding: 0;
+}
+/* line 199, ../sass/styles.scss */
+.view-team-members ul.users li.user {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 265px;
+  margin-right: 21px;
+  float: left;
+  background: #f4f4f4;
+  position: relative;
+}
+/* line 208, ../sass/styles.scss */
+.view-team-members ul.users li.user.last {
+  margin-right: 0;
+}
+/* line 211, ../sass/styles.scss */
+.view-team-members ul.users li.user a {
+  border: none;
+}
+/* line 214, ../sass/styles.scss */
+.view-team-members ul.users li.user .thumbnail {
+  float: left;
+}
+/* line 216, ../sass/styles.scss */
+.view-team-members ul.users li.user .thumbnail img {
+  display: block;
+}
+/* line 220, ../sass/styles.scss */
+.view-team-members ul.users li.user .main {
+  margin-left: 85px;
+  font-weight: bold;
+  font-size: 0.875em;
+}
+/* line 225, ../sass/styles.scss */
+.view-team-members ul.users li.user .link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+/* line 229, ../sass/styles.scss */
+.view-team-members ul.users li.user .link a {
+  display: block;
+  background: url(../images/sprite.png) left -34px;
+  width: 19px;
+  height: 17px;
+  text-indent: -999em;
+  overflow: hidden;
+}
+
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 192, ../sass/styles.scss */
+/* line 246, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -1995,23 +2057,23 @@ a:hover {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 201, ../sass/styles.scss */
+/* line 255, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 205, ../sass/styles.scss */
+/* line 259, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 209, ../sass/styles.scss */
+/* line 263, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 50px;
 }
 
-/* line 214, ../sass/styles.scss */
+/* line 268, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -50px;
@@ -2021,12 +2083,12 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 221, ../sass/styles.scss */
+/* line 275, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 225, ../sass/styles.scss */
+/* line 279, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
@@ -2035,7 +2097,7 @@ html, body {
 }
 
 /*Opera Fix*/
-/* line 234, ../sass/styles.scss */
+/* line 288, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";
