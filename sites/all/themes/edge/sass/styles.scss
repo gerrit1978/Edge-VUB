@@ -26,6 +26,10 @@
 /* @import "theme-B"; */
 
 /* General elements */
+body {
+  font-family: "Open Sans";
+} 
+ 
 a {
   text-decoration: none;
   color: $darkGrey;
@@ -57,7 +61,7 @@ h2#page-title {
  * Header 
  */
 #header {
-  height: 125px;
+  height: 130px;
   border-top: 5px solid $green;
   h1#site-name {
     a {
@@ -67,6 +71,7 @@ h2#page-title {
 	    background: url(../images/logo.png);    
       display: block;
       border: none;
+      overflow: hidden;
     }
   }
   .inner {
@@ -81,6 +86,11 @@ h2#page-title {
 	    .form-text {
 	      height: 30px;
 	      line-height: 30px;
+	      padding-left: 5px;
+	      width: 215px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $lightGrey;
 	    }
 	    .form-submit {
 	      background: url(../images/sprite.png) no-repeat left top;
@@ -89,6 +99,20 @@ h2#page-title {
 	      width: 33px;
 	      text-indent: -999em;
 	      cursor: pointer;
+	    }
+	  }
+	  .block-logo-vub {
+	    position: absolute;
+	    right: 0;
+	    top: 50px;
+	    a.logo {
+	      display: block;
+	      width: 265px;
+	      height: 50px;
+	      text-indent: -999em;
+	      overflow: hidden;
+	      background: url(../images/logo-vub.jpg) no-repeat;
+	      border: none;
 	    }
 	  }
   }
@@ -116,6 +140,9 @@ h2#page-title {
 		    color: $darkGrey;
 		    border-bottom: none;
 		    text-transform: uppercase;
+		    font-family: "Open Sans Condensed";
+		    font-size: 1.1875em;
+		    font-weight: 700;
 		    &:hover,&.active {
 		      color: $green;
 		    }
@@ -177,7 +204,8 @@ h2#page-title {
         height: 265px;
         text-transform: uppercase;
         color: $green;
-        font-size: 1.25em;
+        font-size: 1.375em;
+        font-weight: 600;
         &:hover {
           color: $black;
         }
@@ -262,13 +290,13 @@ html, body {
 
 #page-wrapper-inner {
   overflow:auto;
-	padding-bottom: 50px;
+	padding-bottom: 80px;
 }
 
 #footer {
   position: relative;
-	margin-top: -50px; /* negative value of footer height */
-	height: 50px;
+	margin-top: -80px; /* negative value of footer height */
+	height: 80px;
 	clear:both;
   border-bottom: 5px solid $green;
 	font-size: 0.875em;
@@ -281,6 +309,35 @@ html, body {
 	  margin-left: auto;
 	  margin-right: auto;
 	  margin-bottom: 0;
+	}
+	.block-footer-links {
+	  a {
+	    font-weight: 700;
+	    text-transform: uppercase;
+	    font-size: 1.0625em;
+	    border: none;
+	    height: 50px;
+	    line-height: 88px;
+	    display: inline-block;
+	  }
+	  .column-left {
+	    a {
+	      background: url(../images/logo-ies.jpg) no-repeat left top;
+	      padding-left: 85px;
+	    }
+	  }
+	  .column-center {
+	    a {
+	      background: url(../images/logo-envelope.jpg) no-repeat left top;
+	      padding-left: 60px;
+	    }
+	  }
+	  .column-right {
+	    a {
+	      background: url(../images/logo-poli.jpg) no-repeat right top;
+	      padding-right: 55px;
+	    }
+	  }
 	}
 }
 

@@ -136,7 +136,7 @@ function edge_preprocess_block(&$variables, $hook) {
  */
 function edge_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
-    $form['search_block_form']['#weight'] = 100;
+    $form['search_block_form']['#weight'] = 1000;
     $form['search_block_form']['#attributes']['placeholder'] = 'search';
 /*
     print "<pre>";
