@@ -1938,7 +1938,7 @@ h2#page-title {
 .front .visual {
   position: relative;
   height: 580px;
-  background: red;
+  background: url(../images/visual-woman.jpg);
   margin-bottom: 30px;
 }
 /* line 152, ../sass/styles.scss */
@@ -1980,7 +1980,7 @@ h2#page-title {
 }
 /* line 181, ../sass/styles.scss */
 .front .visual .block a:hover {
-  color: #ababab;
+  color: black;
 }
 /* line 184, ../sass/styles.scss */
 .front .visual .block a span {

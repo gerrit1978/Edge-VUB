@@ -147,7 +147,7 @@ h2#page-title {
   .visual {
     position: relative;
     height: 580px;
-    background: red;
+    background: url(../images/visual-woman.jpg);
     margin-bottom: 30px;
     .block {
       margin: 0;
@@ -179,7 +179,7 @@ h2#page-title {
         color: $green;
         font-size: 1.25em;
         &:hover {
-          color: $lightGrey;
+          color: $black;
         }
         span {
           position: absolute;
