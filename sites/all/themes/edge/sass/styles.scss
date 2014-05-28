@@ -28,7 +28,11 @@
 /* General elements */
 body {
   font-family: "Open Sans";
-} 
+}
+
+#content, .sidebars {
+  font-family: Arial;
+}
  
 a {
   text-decoration: none;
@@ -55,11 +59,10 @@ h1#page-title,
 h2#page-title {
   color: $green;
   text-transform: uppercase;
+  font-family: "Open Sans";
 }
 
-/**
- * Header 
- */
+/* Header */
 #header {
   height: 130px;
   border-top: 5px solid $green;
@@ -118,9 +121,7 @@ h2#page-title {
   }
 }
 
-/**
- * Main menu
- */
+/* Main Menu */
 #navigation {
   padding: 0;
   background: $black;
@@ -151,9 +152,12 @@ h2#page-title {
   }
 }
 
-/** 
- * Columns
- */
+/* Main content */
+#main {
+  padding-top: 4em;
+}
+
+/* Columns */
 .three-columns {
   $zen-column-count: 24;
   .column-left {
@@ -166,6 +170,42 @@ h2#page-title {
   .column-right {
     text-align: right;
     @include zen-grid-item(8, 17);
+  }
+}
+
+/* Sidebar blocks */
+.region-sidebar-first {
+  .block {
+    margin-left: -10px;
+    padding-top: 150px;
+    background: url(../images/blocks/bg-1.jpg) no-repeat left top;
+    border-bottom: 2px solid $green;
+    .content, .view-content {
+      margin-left: 15px;
+	    ul {
+	      margin: 0;
+	      padding: 0;
+	      li {
+	        list-style: none;
+	        a {
+	          border-bottom: none;
+	          &:hover,&.active {
+	            color: $lightGrey;
+	            border-bottom: 1px solid $lightGrey;
+	          }
+	        }
+	      }
+	    }
+    }
+  }
+  h2 {
+    font-family: "Open Sans Condensed";
+    color: $green;
+    text-transform: uppercase;
+    background: url(../images/sprite.png) no-repeat left -55px;
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-top: 30px;
   }
 }
 
@@ -217,6 +257,38 @@ h2#page-title {
       }
     }
   }
+}
+
+/* Core theme page */
+#content {
+	.view-core-themes {
+	  ul.themes {
+	    margin: 0;
+	    padding: 0;
+	    li.theme {
+	      list-style: none;
+	      margin-bottom: 30px;
+	      padding-bottom: 30px;
+	      border-bottom: 1px solid $veryLightGrey;
+	      h2 {
+	        font-family: "Open Sans Condensed";
+	        margin: 10px 0;
+	        font-weight: 600;
+	        a {
+	          color: $green;
+	          border-bottom: 1px solid $lightGreen;
+	          &:hover {
+	            border-bottom-color: $green;
+	          }
+	        }
+	      }
+	      p {
+	        margin-top: 0;
+	        margin-bottom: 10px;
+	      }
+	    }
+	  }
+	}
 }
 
 /* Team page */

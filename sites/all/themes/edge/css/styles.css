@@ -1799,46 +1799,50 @@ body {
 }
 
 /* line 33, ../sass/styles.scss */
+#content, .sidebars {
+  font-family: Arial;
+}
+
+/* line 37, ../sass/styles.scss */
 a {
   text-decoration: none;
   color: #767676;
   border-bottom: 1px solid #ababab;
 }
-/* line 37, ../sass/styles.scss */
+/* line 41, ../sass/styles.scss */
 a:hover {
   color: black;
   border-bottom: 1px solid black;
   text-decoration: none;
 }
 
-/* line 44, ../sass/styles.scss */
+/* line 48, ../sass/styles.scss */
 .form-text {
   border: 2px solid #a1b202;
 }
 
-/* line 48, ../sass/styles.scss */
+/* line 52, ../sass/styles.scss */
 #content {
   padding-left: 0;
   padding-right: 0;
   margin-top: 10px;
 }
 
-/* line 55, ../sass/styles.scss */
+/* line 59, ../sass/styles.scss */
 h1#page-title,
 h2#page-title {
   color: #a1b202;
   text-transform: uppercase;
+  font-family: "Open Sans";
 }
 
-/**
- * Header 
- */
-/* line 63, ../sass/styles.scss */
+/* Header */
+/* line 66, ../sass/styles.scss */
 #header {
   height: 130px;
   border-top: 5px solid #a1b202;
 }
-/* line 67, ../sass/styles.scss */
+/* line 70, ../sass/styles.scss */
 #header h1#site-name a {
   text-indent: -999em;
   width: 190px;
@@ -1848,20 +1852,20 @@ h2#page-title {
   border: none;
   overflow: hidden;
 }
-/* line 77, ../sass/styles.scss */
+/* line 80, ../sass/styles.scss */
 #header .inner {
   position: relative;
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 82, ../sass/styles.scss */
+/* line 85, ../sass/styles.scss */
 #header .inner #block-search-form {
   position: absolute;
   top: 4px;
   right: 0;
 }
-/* line 86, ../sass/styles.scss */
+/* line 89, ../sass/styles.scss */
 #header .inner #block-search-form .form-text {
   height: 30px;
   line-height: 30px;
@@ -1871,7 +1875,7 @@ h2#page-title {
   text-transform: uppercase;
   color: #ababab;
 }
-/* line 95, ../sass/styles.scss */
+/* line 98, ../sass/styles.scss */
 #header .inner #block-search-form .form-submit {
   background: url(../images/sprite.png) no-repeat left top;
   border: none;
@@ -1880,13 +1884,13 @@ h2#page-title {
   text-indent: -999em;
   cursor: pointer;
 }
-/* line 104, ../sass/styles.scss */
+/* line 107, ../sass/styles.scss */
 #header .inner .block-logo-vub {
   position: absolute;
   right: 0;
   top: 50px;
 }
-/* line 108, ../sass/styles.scss */
+/* line 111, ../sass/styles.scss */
 #header .inner .block-logo-vub a.logo {
   display: block;
   width: 265px;
@@ -1897,32 +1901,30 @@ h2#page-title {
   border: none;
 }
 
-/**
- * Main menu
- */
-/* line 124, ../sass/styles.scss */
+/* Main Menu */
+/* line 125, ../sass/styles.scss */
 #navigation {
   padding: 0;
   background: black;
 }
-/* line 127, ../sass/styles.scss */
+/* line 128, ../sass/styles.scss */
 #navigation ul {
   position: absolute;
   bottom: 3px;
   margin: 0;
   padding: 0;
 }
-/* line 132, ../sass/styles.scss */
+/* line 133, ../sass/styles.scss */
 #navigation ul li {
   margin: 0;
   padding: 0;
   margin-right: 30px;
 }
-/* line 136, ../sass/styles.scss */
+/* line 137, ../sass/styles.scss */
 #navigation ul li.first {
   margin-left: 10px;
 }
-/* line 139, ../sass/styles.scss */
+/* line 140, ../sass/styles.scss */
 #navigation ul li a {
   color: #767676;
   border-bottom: none;
@@ -1931,22 +1933,26 @@ h2#page-title {
   font-size: 1.1875em;
   font-weight: 700;
 }
-/* line 146, ../sass/styles.scss */
+/* line 147, ../sass/styles.scss */
 #navigation ul li a:hover, #navigation ul li a.active {
   color: #a1b202;
 }
 
-/** 
- * Columns
- */
-/* line 159, ../sass/styles.scss */
+/* Main content */
+/* line 156, ../sass/styles.scss */
+#main {
+  padding-top: 4em;
+}
+
+/* Columns */
+/* line 163, ../sass/styles.scss */
 .three-columns .column-left {
   float: left;
   width: 33.33333%;
   margin-left: 0%;
   margin-right: -33.33333%;
 }
-/* line 162, ../sass/styles.scss */
+/* line 166, ../sass/styles.scss */
 .three-columns .column-center {
   text-align: center;
   float: left;
@@ -1954,7 +1960,7 @@ h2#page-title {
   margin-left: 33.33333%;
   margin-right: -66.66667%;
 }
-/* line 166, ../sass/styles.scss */
+/* line 170, ../sass/styles.scss */
 .three-columns .column-right {
   text-align: right;
   float: left;
@@ -1963,15 +1969,56 @@ h2#page-title {
   margin-right: -100%;
 }
 
+/* Sidebar blocks */
+/* line 178, ../sass/styles.scss */
+.region-sidebar-first .block {
+  margin-left: -10px;
+  padding-top: 150px;
+  background: url(../images/blocks/bg-1.jpg) no-repeat left top;
+  border-bottom: 2px solid #a1b202;
+}
+/* line 183, ../sass/styles.scss */
+.region-sidebar-first .block .content, .region-sidebar-first .block .view-content {
+  margin-left: 15px;
+}
+/* line 185, ../sass/styles.scss */
+.region-sidebar-first .block .content ul, .region-sidebar-first .block .view-content ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 188, ../sass/styles.scss */
+.region-sidebar-first .block .content ul li, .region-sidebar-first .block .view-content ul li {
+  list-style: none;
+}
+/* line 190, ../sass/styles.scss */
+.region-sidebar-first .block .content ul li a, .region-sidebar-first .block .view-content ul li a {
+  border-bottom: none;
+}
+/* line 192, ../sass/styles.scss */
+.region-sidebar-first .block .content ul li a:hover, .region-sidebar-first .block .content ul li a.active, .region-sidebar-first .block .view-content ul li a:hover, .region-sidebar-first .block .view-content ul li a.active {
+  color: #ababab;
+  border-bottom: 1px solid #ababab;
+}
+/* line 201, ../sass/styles.scss */
+.region-sidebar-first h2 {
+  font-family: "Open Sans Condensed";
+  color: #a1b202;
+  text-transform: uppercase;
+  background: url(../images/sprite.png) no-repeat left -55px;
+  padding-top: 5px;
+  padding-left: 5px;
+  margin-top: 30px;
+}
+
 /* Front page */
-/* line 174, ../sass/styles.scss */
+/* line 214, ../sass/styles.scss */
 .front .visual {
   position: relative;
   height: 580px;
   background: url(../images/visual-woman.jpg);
   margin-bottom: 30px;
 }
-/* line 179, ../sass/styles.scss */
+/* line 219, ../sass/styles.scss */
 .front .visual .block {
   margin: 0;
   position: absolute;
@@ -1979,27 +2026,27 @@ h2#page-title {
   width: 265px;
   background: url(../images/bg-white.png);
 }
-/* line 185, ../sass/styles.scss */
+/* line 225, ../sass/styles.scss */
 .front .visual .block.block-working-papers {
   left: 0;
   top: 200px;
 }
-/* line 189, ../sass/styles.scss */
+/* line 229, ../sass/styles.scss */
 .front .visual .block.block-visiting-fellows {
   left: 285px;
   top: 0;
 }
-/* line 193, ../sass/styles.scss */
+/* line 233, ../sass/styles.scss */
 .front .visual .block.block-news {
   left: 570px;
   bottom: 0;
 }
-/* line 197, ../sass/styles.scss */
+/* line 237, ../sass/styles.scss */
 .front .visual .block.block-gallery {
   right: 0;
   top: 25px;
 }
-/* line 201, ../sass/styles.scss */
+/* line 241, ../sass/styles.scss */
 .front .visual .block a {
   border: none;
   display: block;
@@ -2009,24 +2056,58 @@ h2#page-title {
   font-size: 1.375em;
   font-weight: 600;
 }
-/* line 209, ../sass/styles.scss */
+/* line 249, ../sass/styles.scss */
 .front .visual .block a:hover {
   color: black;
 }
-/* line 212, ../sass/styles.scss */
+/* line 252, ../sass/styles.scss */
 .front .visual .block a span {
   position: absolute;
   bottom: 5px;
   left: 5px;
 }
 
+/* Core theme page */
+/* line 265, ../sass/styles.scss */
+#content .view-core-themes ul.themes {
+  margin: 0;
+  padding: 0;
+}
+/* line 268, ../sass/styles.scss */
+#content .view-core-themes ul.themes li.theme {
+  list-style: none;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #f4f4f4;
+}
+/* line 273, ../sass/styles.scss */
+#content .view-core-themes ul.themes li.theme h2 {
+  font-family: "Open Sans Condensed";
+  margin: 10px 0;
+  font-weight: 600;
+}
+/* line 277, ../sass/styles.scss */
+#content .view-core-themes ul.themes li.theme h2 a {
+  color: #a1b202;
+  border-bottom: 1px solid #d7db7b;
+}
+/* line 280, ../sass/styles.scss */
+#content .view-core-themes ul.themes li.theme h2 a:hover {
+  border-bottom-color: #a1b202;
+}
+/* line 285, ../sass/styles.scss */
+#content .view-core-themes ul.themes li.theme p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 /* Team page */
-/* line 224, ../sass/styles.scss */
+/* line 296, ../sass/styles.scss */
 .view-team-members ul.users {
   margin: 0;
   padding: 0;
 }
-/* line 227, ../sass/styles.scss */
+/* line 299, ../sass/styles.scss */
 .view-team-members ul.users li.user {
   margin: 0;
   padding: 0;
@@ -2037,35 +2118,35 @@ h2#page-title {
   background: #f4f4f4;
   position: relative;
 }
-/* line 236, ../sass/styles.scss */
+/* line 308, ../sass/styles.scss */
 .view-team-members ul.users li.user.last {
   margin-right: 0;
 }
-/* line 239, ../sass/styles.scss */
+/* line 311, ../sass/styles.scss */
 .view-team-members ul.users li.user a {
   border: none;
 }
-/* line 242, ../sass/styles.scss */
+/* line 314, ../sass/styles.scss */
 .view-team-members ul.users li.user .thumbnail {
   float: left;
 }
-/* line 244, ../sass/styles.scss */
+/* line 316, ../sass/styles.scss */
 .view-team-members ul.users li.user .thumbnail img {
   display: block;
 }
-/* line 248, ../sass/styles.scss */
+/* line 320, ../sass/styles.scss */
 .view-team-members ul.users li.user .main {
   margin-left: 85px;
   font-weight: bold;
   font-size: 0.875em;
 }
-/* line 253, ../sass/styles.scss */
+/* line 325, ../sass/styles.scss */
 .view-team-members ul.users li.user .link {
   position: absolute;
   right: 0;
   bottom: 0;
 }
-/* line 257, ../sass/styles.scss */
+/* line 329, ../sass/styles.scss */
 .view-team-members ul.users li.user .link a {
   display: block;
   background: url(../images/sprite.png) left -34px;
@@ -2079,7 +2160,7 @@ h2#page-title {
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 274, ../sass/styles.scss */
+/* line 346, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -2088,23 +2169,23 @@ h2#page-title {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 283, ../sass/styles.scss */
+/* line 355, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 287, ../sass/styles.scss */
+/* line 359, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 291, ../sass/styles.scss */
+/* line 363, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 80px;
 }
 
-/* line 296, ../sass/styles.scss */
+/* line 368, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -80px;
@@ -2114,19 +2195,19 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 303, ../sass/styles.scss */
+/* line 375, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 307, ../sass/styles.scss */
+/* line 379, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
 }
-/* line 314, ../sass/styles.scss */
+/* line 386, ../sass/styles.scss */
 #footer .block-footer-links a {
   font-weight: 700;
   text-transform: uppercase;
@@ -2136,24 +2217,24 @@ html, body {
   line-height: 88px;
   display: inline-block;
 }
-/* line 324, ../sass/styles.scss */
+/* line 396, ../sass/styles.scss */
 #footer .block-footer-links .column-left a {
   background: url(../images/logo-ies.jpg) no-repeat left top;
   padding-left: 85px;
 }
-/* line 330, ../sass/styles.scss */
+/* line 402, ../sass/styles.scss */
 #footer .block-footer-links .column-center a {
   background: url(../images/logo-envelope.jpg) no-repeat left top;
   padding-left: 60px;
 }
-/* line 336, ../sass/styles.scss */
+/* line 408, ../sass/styles.scss */
 #footer .block-footer-links .column-right a {
   background: url(../images/logo-poli.jpg) no-repeat right top;
   padding-right: 55px;
 }
 
 /*Opera Fix*/
-/* line 345, ../sass/styles.scss */
+/* line 417, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";
