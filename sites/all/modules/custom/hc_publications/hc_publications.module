@@ -204,6 +204,9 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
   $publication_type_final = array_search($publication_type, $publication_types);
   
   $vars['output_type'] = "<div class='publication-type'>category: " . $publication_type_final . "</div>";
+  
+  // LINK
+  $vars['output_link'] = "<div class='link'>" . l('more info', 'node/' . $nid) . "</div>";
 }
 
 

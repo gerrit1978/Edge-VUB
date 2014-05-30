@@ -138,11 +138,66 @@ function edge_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
     $form['search_block_form']['#weight'] = 1000;
     $form['search_block_form']['#attributes']['placeholder'] = 'search';
-/*
-    print "<pre>";
-    print_r($form);
-    print "</pre>";
-    exit();
-*/
   }
+}
+
+
+/**
+ * Theme a field
+ */
+function edge_preprocess_field(&$variables, $hook) {
+  if ($variables['element']['#field_name'] == 'field_pub_authors') {
+    $items = $variables['element']['#items'];
+    $authors_array = array();
+    foreach ($items as $item) {
+      $field_collection_item = entity_metadata_wrapper('field_collection_item', $item['value']);
+      $author_type = $field_collection_item->field_pub_authors_type->value();
+      switch ($author_type) {
+        case 'internal':
+          $author_internal_uid = $field_collection_item->field_pub_authors_internal->value()->uid;
+          $author_internal = entity_metadata_wrapper('user', $author_internal_uid);
+          $author_internal_firstname = $author_internal->field_user_firstname->value();
+          $author_internal_lastname = $author_internal->field_user_lastname->value();
+          $author_internal_fullname = strtoupper($author_internal_lastname) . ", " . $author_internal_firstname;
+          $author_internal_output = l($author_internal_fullname, 'user/' . $author_internal_uid);
+          $authors_array[] = $author_internal_output;
+          break;
+        
+        case 'external':
+          $authors_array[] = $field_collection_item->field_pub_authors_external->value();
+          break;
+      }
+    }
+
+    unset($variables['items']);
+    $i = 0;
+    if (count($authors_array) == 1) {
+      $authors_final_output = $authors_array[0];
+    } else {
+	    $authors_final_output = "";
+	    foreach($authors_array as $author) {
+	      if ($i == 0) {
+	        $authors_final_output = $authors_array[0];
+	      } else if ($i < (count($authors_array)-1)) {
+	        $authors_final_output .= ", " . $authors_array[$i];
+	      } else {
+	        $authors_final_output .= " & " . $authors_array[$i];
+	      }
+        $i++;
+	    }
+	  }
+/*     $authors_final_output = implode(', ', $authors_array); */
+    $variables['items'][0] = array('#markup' => $authors_final_output);
+
+/*     $variables['output'] = $output; */
+
+  }
+
+/*
+  exit();
+  print "<pre>";
+  print_r($variables);
+  print "</pre>";
+  exit();
+*/
 }

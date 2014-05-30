@@ -62,6 +62,11 @@ h2#page-title {
   font-family: "Open Sans";
 }
 
+h2 {
+  color: $green;
+  font-family: "Open Sans Condensed";
+}
+
 /* Header */
 #header {
   height: 130px;
@@ -190,13 +195,16 @@ h2#page-title {
 	        a {
 	          border-bottom: none;
 	          &:hover,&.active {
-	            color: $lightGrey;
-	            border-bottom: 1px solid $lightGrey;
+	            color: $black;
+	            border-bottom: 1px solid $black;
 	          }
 	        }
 	      }
 	    }
     }
+  }
+  .block-links-team {
+    background: url(../images/blocks/bg-2.jpg) no-repeat left top;
   }
   h2 {
     font-family: "Open Sans Condensed";
@@ -339,6 +347,110 @@ h2#page-title {
   }
 }
 
+/* Publications */
+.view-publications {
+  margin-top: 20px;
+  ul.publications {
+    margin: 0; 
+    padding: 0;
+    li.publication {
+      list-style: none;
+      margin-bottom: 10px;
+      padding: 15px;
+      background: $veryLightGrey;
+      position: relative;
+      .publication-type {
+        font-size: 0.875em;
+        color: $lightGrey;
+      }
+      .link {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        font-size: 0.875em;
+      }
+    }
+  }
+}
+
+.node-type-publication {
+  .field-name-field-pub-abstract {
+    margin-bottom: 20px;
+  }
+  .field {
+    .field-label {
+      width: 205px;
+    }
+  }
+  
+  .field-collection-container {
+    border-bottom: 0;
+    margin-bottom: 0;
+    .field-item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Galleries */
+#content {
+	.view-gallery {
+	  ul.galleries {
+	    margin: 0;
+	    padding: 0;
+	    li.gallery {
+	      list-style: none;
+	      margin: 0;
+	      margin-bottom: 30px;
+	      padding-bottom: 30px;
+	      border-bottom: 1px solid $veryLightGrey;
+	      .views-field-field-gallery-image {
+	        ul {
+	          margin: 0;
+	          padding: 0;
+	          li {
+	            float: left;
+	            margin-right: 10px;
+	            list-style: none;
+	            a {
+	              border: none;
+	              display: block;
+		            img {
+		              display: block;
+		            }
+	            }
+	          }
+	        }
+	      }
+	      .views-field-view-node {
+	        clear: left;
+	        padding-top: 20px;
+	      }
+	    }
+	  }
+	}
+}
+
+.node-type-gallery {
+  #content {
+    .field-name-field-gallery-image {
+      .field-items {
+        .field-item {
+          float: left;
+          margin-right: 10px;
+          a {
+            display: block;
+            border: none;
+            img {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
@@ -383,32 +495,34 @@ html, body {
 	  margin-bottom: 0;
 	}
 	.block-footer-links {
-	  a {
-	    font-weight: 700;
-	    text-transform: uppercase;
-	    font-size: 1.0625em;
-	    border: none;
-	    height: 50px;
-	    line-height: 88px;
-	    display: inline-block;
-	  }
-	  .column-left {
-	    a {
-	      background: url(../images/logo-ies.jpg) no-repeat left top;
-	      padding-left: 85px;
-	    }
-	  }
-	  .column-center {
-	    a {
-	      background: url(../images/logo-envelope.jpg) no-repeat left top;
-	      padding-left: 60px;
-	    }
-	  }
-	  .column-right {
-	    a {
-	      background: url(../images/logo-poli.jpg) no-repeat right top;
-	      padding-right: 55px;
-	    }
+	  .three-columns {
+		  a {
+		    font-weight: 700;
+		    text-transform: uppercase;
+		    font-size: 1.0625em;
+		    border: none;
+		    height: 50px;
+		    line-height: 88px;
+		    display: inline-block;
+		  }
+		  .column-left {
+		    a {
+		      background: url(../images/logo-ies.jpg) no-repeat left top;
+		      padding-left: 85px;
+		    }
+		  }
+		  .column-center {
+		    a {
+		      background: url(../images/logo-envelope.jpg) no-repeat left top;
+		      padding-left: 60px;
+		    }
+		  }
+		  .column-right {
+		    a {
+		      background: url(../images/logo-poli.jpg) no-repeat right top;
+		      padding-right: 55px;
+		    }
+		  }
 	  }
 	}
 }
