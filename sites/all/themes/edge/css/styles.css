@@ -1984,24 +1984,24 @@ h2 {
   border-bottom: 2px solid #a1b202;
 }
 /* line 188, ../sass/styles.scss */
-.region-sidebar-first .block .content, .region-sidebar-first .block .view-content {
+.region-sidebar-first .block .content, .region-sidebar-first .block .view-content, .region-sidebar-first .block .navigation-list {
   margin-left: 15px;
 }
 /* line 190, ../sass/styles.scss */
-.region-sidebar-first .block .content ul, .region-sidebar-first .block .view-content ul {
+.region-sidebar-first .block .content ul, .region-sidebar-first .block .view-content ul, .region-sidebar-first .block .navigation-list ul {
   margin: 0;
   padding: 0;
 }
 /* line 193, ../sass/styles.scss */
-.region-sidebar-first .block .content ul li, .region-sidebar-first .block .view-content ul li {
+.region-sidebar-first .block .content ul li, .region-sidebar-first .block .view-content ul li, .region-sidebar-first .block .navigation-list ul li {
   list-style: none;
 }
 /* line 195, ../sass/styles.scss */
-.region-sidebar-first .block .content ul li a, .region-sidebar-first .block .view-content ul li a {
+.region-sidebar-first .block .content ul li a, .region-sidebar-first .block .view-content ul li a, .region-sidebar-first .block .navigation-list ul li a {
   border-bottom: none;
 }
 /* line 197, ../sass/styles.scss */
-.region-sidebar-first .block .content ul li a:hover, .region-sidebar-first .block .content ul li a.active, .region-sidebar-first .block .view-content ul li a:hover, .region-sidebar-first .block .view-content ul li a.active {
+.region-sidebar-first .block .content ul li a:hover, .region-sidebar-first .block .content ul li a.active, .region-sidebar-first .block .view-content ul li a:hover, .region-sidebar-first .block .view-content ul li a.active, .region-sidebar-first .block .navigation-list ul li a:hover, .region-sidebar-first .block .navigation-list ul li a.active {
   color: black;
   border-bottom: 1px solid black;
 }
@@ -2229,52 +2229,90 @@ h2 {
   padding-bottom: 30px;
   border-bottom: 1px solid #f4f4f4;
 }
-/* line 408, ../sass/styles.scss */
+/* line 407, ../sass/styles.scss */
+#content .view-gallery ul.galleries li.gallery.last {
+  border-bottom: none;
+}
+/* line 411, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul {
   margin: 0;
   padding: 0;
 }
-/* line 411, ../sass/styles.scss */
+/* line 414, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li {
   float: left;
   margin-right: 10px;
   list-style: none;
 }
-/* line 415, ../sass/styles.scss */
+/* line 418, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li a {
   border: none;
   display: block;
 }
-/* line 418, ../sass/styles.scss */
+/* line 421, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li a img {
   display: block;
 }
-/* line 425, ../sass/styles.scss */
+/* line 428, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-view-node {
   clear: left;
   padding-top: 20px;
 }
 
-/* line 438, ../sass/styles.scss */
+/* line 441, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item {
   float: left;
   margin-right: 10px;
 }
-/* line 441, ../sass/styles.scss */
+/* line 444, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item a {
   display: block;
   border: none;
 }
-/* line 444, ../sass/styles.scss */
+/* line 447, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item a img {
   display: block;
+}
+
+/* News */
+/* line 460, ../sass/styles.scss */
+#content .view-news ul.items {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+}
+/* line 464, ../sass/styles.scss */
+#content .view-news ul.items li.item {
+  margin: 0;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #f4f4f4;
+  list-style: none;
+}
+/* line 470, ../sass/styles.scss */
+#content .view-news ul.items li.item.last {
+  border-bottom: none;
+}
+/* line 473, ../sass/styles.scss */
+#content .view-news ul.items li.item h3 {
+  margin: 0;
+  margin-bottom: 5px;
+  font-family: "Open Sans Condensed";
+  font-size: 1.375em;
+  line-height: 1;
+  font-weight: 600;
+}
+/* line 481, ../sass/styles.scss */
+#content .view-news ul.items li.item .news-date {
+  color: #ababab;
+  font-size: 0.75em;
 }
 
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 458, ../sass/styles.scss */
+/* line 494, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -2283,23 +2321,23 @@ h2 {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 467, ../sass/styles.scss */
+/* line 503, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 471, ../sass/styles.scss */
+/* line 507, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 475, ../sass/styles.scss */
+/* line 511, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 80px;
 }
 
-/* line 480, ../sass/styles.scss */
+/* line 516, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -80px;
@@ -2309,19 +2347,19 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 487, ../sass/styles.scss */
+/* line 523, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 491, ../sass/styles.scss */
+/* line 527, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
 }
-/* line 499, ../sass/styles.scss */
+/* line 535, ../sass/styles.scss */
 #footer .block-footer-links .three-columns a {
   font-weight: 700;
   text-transform: uppercase;
@@ -2331,24 +2369,24 @@ html, body {
   line-height: 88px;
   display: inline-block;
 }
-/* line 509, ../sass/styles.scss */
+/* line 545, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-left a {
   background: url(../images/logo-ies.jpg) no-repeat left top;
   padding-left: 85px;
 }
-/* line 515, ../sass/styles.scss */
+/* line 551, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-center a {
   background: url(../images/logo-envelope.jpg) no-repeat left top;
   padding-left: 60px;
 }
-/* line 521, ../sass/styles.scss */
+/* line 557, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-right a {
   background: url(../images/logo-poli.jpg) no-repeat right top;
   padding-right: 55px;
 }
 
 /*Opera Fix*/
-/* line 531, ../sass/styles.scss */
+/* line 567, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";
