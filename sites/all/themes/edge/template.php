@@ -56,7 +56,7 @@ function edge_preprocess_page(&$variables, $hook) {
   // Remove title from homepage
   if (drupal_is_front_page()) {
     $variables['title'] = "";
-  }
+  } 
 }
 // */
 
@@ -186,18 +186,15 @@ function edge_preprocess_field(&$variables, $hook) {
         $i++;
 	    }
 	  }
-/*     $authors_final_output = implode(', ', $authors_array); */
     $variables['items'][0] = array('#markup' => $authors_final_output);
-
-/*     $variables['output'] = $output; */
-
   }
+}
 
-/*
-  exit();
-  print "<pre>";
-  print_r($variables);
-  print "</pre>";
-  exit();
-*/
+/**
+ * Override views title for team pages
+ */
+function edge_views_pre_render(&$view) { 
+  if ($view->name == 'team_members' && $view->current_display == 'page_4') {
+    $view->build_info['title'] = $view->build_info['substitutions']["%1"];
+  }
 }
