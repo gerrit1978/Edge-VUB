@@ -2309,11 +2309,39 @@ h2 {
   font-size: 0.75em;
 }
 
+/* User profile page */
+/* line 493, ../sass/styles.scss */
+.page-user .top {
+  margin-bottom: 20px;
+}
+/* line 495, ../sass/styles.scss */
+.page-user .top .field-name-field-user-soundbite {
+  float: right;
+  color: #a1b202;
+  font-family: "Open Sans Condensed";
+  font-style: italic;
+  font-size: 2.875em;
+  margin-left: 20px;
+  font-weight: 300;
+}
+/* line 505, ../sass/styles.scss */
+.page-user .top .field-name-field-user-picture img {
+  border: 3px solid #a1b202;
+}
+/* line 511, ../sass/styles.scss */
+.page-user .field-label-inline .field-label {
+  width: 205px;
+}
+/* line 516, ../sass/styles.scss */
+.page-user .field-label-above p {
+  margin-top: 4px;
+}
+
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 495, ../sass/styles.scss */
+/* line 527, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -2322,23 +2350,23 @@ h2 {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 504, ../sass/styles.scss */
+/* line 536, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 508, ../sass/styles.scss */
+/* line 540, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 512, ../sass/styles.scss */
+/* line 544, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 80px;
 }
 
-/* line 517, ../sass/styles.scss */
+/* line 549, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -80px;
@@ -2348,19 +2376,19 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 524, ../sass/styles.scss */
+/* line 556, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 528, ../sass/styles.scss */
+/* line 560, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
 }
-/* line 536, ../sass/styles.scss */
+/* line 568, ../sass/styles.scss */
 #footer .block-footer-links .three-columns a {
   font-weight: 700;
   text-transform: uppercase;
@@ -2370,24 +2398,24 @@ html, body {
   line-height: 88px;
   display: inline-block;
 }
-/* line 546, ../sass/styles.scss */
+/* line 578, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-left a {
   background: url(../images/logo-ies.jpg) no-repeat left top;
   padding-left: 85px;
 }
-/* line 552, ../sass/styles.scss */
+/* line 584, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-center a {
   background: url(../images/logo-envelope.jpg) no-repeat left top;
   padding-left: 60px;
 }
-/* line 558, ../sass/styles.scss */
+/* line 590, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-right a {
   background: url(../images/logo-poli.jpg) no-repeat right top;
   padding-right: 55px;
 }
 
 /*Opera Fix*/
-/* line 568, ../sass/styles.scss */
+/* line 600, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";

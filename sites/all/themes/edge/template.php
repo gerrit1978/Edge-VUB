@@ -198,3 +198,11 @@ function edge_views_pre_render(&$view) {
     $view->build_info['title'] = $view->build_info['substitutions']["%1"];
   }
 }
+
+/**
+ * Add the user's email address to profile page
+ */
+function edge_preprocess_user_profile(&$variables) {
+  $email = $variables['elements']['#account']->mail;
+  $variables['user_profile']['user_email'] = array('#markup' => "<a href='mailto:$email'>$email</a>");
+}

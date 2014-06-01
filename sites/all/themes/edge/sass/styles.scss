@@ -488,6 +488,38 @@ h2 {
 	}
 }
 
+/* User profile page */
+.page-user {
+  .top {
+    margin-bottom: 20px;
+	  .field-name-field-user-soundbite {
+	    float: right;
+	    color: $green;
+	    font-family: "Open Sans Condensed";
+	    font-style: italic;
+	    font-size: 2.875em;
+	    margin-left: 20px;
+	    font-weight: 300;
+	  }
+    .field-name-field-user-picture {
+      img {
+        border: 3px solid $green;
+      }
+    }
+  }
+  .field-label-inline {
+    .field-label {
+      width: 205px;
+    }
+  }
+  .field-label-above {
+    p {
+      margin-top: 4px;
+    }
+  }
+  
+}
+
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
