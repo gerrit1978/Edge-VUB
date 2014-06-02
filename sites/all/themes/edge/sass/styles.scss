@@ -404,6 +404,16 @@ h2 {
   }
 }
 
+/* Working paper series */
+.view-publications {
+  h3.title {
+    font-family: "Open Sans Condensed";
+    font-weight: 600;
+    color: $green;
+    font-size: 1.5em;
+  }
+}
+
 /* Galleries */
 #content {
 	.view-gallery {
@@ -528,7 +538,73 @@ h2 {
       margin-top: 4px;
     }
   }
-  
+}
+
+/* Soundbites fellows */
+.block-soundbites-fellows {
+  text-align: right;
+  .soundbite {
+    color: $green;
+    font-family: "Open Sans Condensed";
+    font-size: 1.375em;
+    font-weight: 700;
+    font-style: italic;
+  }
+  .name {
+    color: $lightGrey;
+    margin-left: 30px;
+  }
+}
+
+/* Documents */
+.node-type-document {
+  .field {
+    &.field-label-inline {
+      .field-label {
+        width: 205px;
+      }
+    }
+  }
+}
+
+.view-document-portal {
+  .view-content {
+    table {
+      width: 100%;
+      caption {
+        margin-bottom: 20px;
+        color: $green;
+        font-size: 1.5em;
+        font-family: "Open Sans Condensed";
+        font-weight: 600;
+        text-align: left;
+      }
+      tr {
+        th {
+          text-align: left;
+	        &.views-field-created {
+	          padding-left: 10px;
+	        }        
+        }
+	      td {
+	        padding-top: 10px;
+	        padding-bottom: 10px;
+	        &.views-field-created {
+	          padding-left: 10px;
+	          width: 20%;
+	        }
+	        &.views-field-title {
+	          width: 70%;
+	        }
+	      }
+	      &.odd {
+	        td {
+	          background-color: $veryLightGrey;
+	        }
+	      }
+      }
+    }
+  }
 }
 
 /**

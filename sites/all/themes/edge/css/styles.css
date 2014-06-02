@@ -2227,13 +2227,22 @@ h2 {
   margin-bottom: 0;
 }
 
+/* Working paper series */
+/* line 409, ../sass/styles.scss */
+.view-publications h3.title {
+  font-family: "Open Sans Condensed";
+  font-weight: 600;
+  color: #a1b202;
+  font-size: 1.5em;
+}
+
 /* Galleries */
-/* line 410, ../sass/styles.scss */
+/* line 420, ../sass/styles.scss */
 #content .view-gallery ul.galleries {
   margin: 0;
   padding: 0;
 }
-/* line 413, ../sass/styles.scss */
+/* line 423, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery {
   list-style: none;
   margin: 0;
@@ -2241,59 +2250,59 @@ h2 {
   padding-bottom: 30px;
   border-bottom: 1px solid #f4f4f4;
 }
-/* line 419, ../sass/styles.scss */
+/* line 429, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery.last {
   border-bottom: none;
 }
-/* line 423, ../sass/styles.scss */
+/* line 433, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul {
   margin: 0;
   padding: 0;
 }
-/* line 426, ../sass/styles.scss */
+/* line 436, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li {
   float: left;
   margin-right: 10px;
   list-style: none;
 }
-/* line 430, ../sass/styles.scss */
+/* line 440, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li a {
   border: none;
   display: block;
 }
-/* line 433, ../sass/styles.scss */
+/* line 443, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-field-gallery-image ul li a img {
   display: block;
 }
-/* line 440, ../sass/styles.scss */
+/* line 450, ../sass/styles.scss */
 #content .view-gallery ul.galleries li.gallery .views-field-view-node {
   clear: left;
   padding-top: 20px;
 }
 
-/* line 453, ../sass/styles.scss */
+/* line 463, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item {
   float: left;
   margin-right: 10px;
 }
-/* line 456, ../sass/styles.scss */
+/* line 466, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item a {
   display: block;
   border: none;
 }
-/* line 459, ../sass/styles.scss */
+/* line 469, ../sass/styles.scss */
 .node-type-gallery #content .field-name-field-gallery-image .field-items .field-item a img {
   display: block;
 }
 
 /* News */
-/* line 472, ../sass/styles.scss */
+/* line 482, ../sass/styles.scss */
 #content .view-news ul.items {
   margin: 0;
   padding: 0;
   margin-top: 20px;
 }
-/* line 476, ../sass/styles.scss */
+/* line 486, ../sass/styles.scss */
 #content .view-news ul.items li.item {
   margin: 0;
   margin-bottom: 30px;
@@ -2301,11 +2310,11 @@ h2 {
   border-bottom: 1px solid #f4f4f4;
   list-style: none;
 }
-/* line 482, ../sass/styles.scss */
+/* line 492, ../sass/styles.scss */
 #content .view-news ul.items li.item.last {
   border-bottom: none;
 }
-/* line 485, ../sass/styles.scss */
+/* line 495, ../sass/styles.scss */
 #content .view-news ul.items li.item h3 {
   margin: 0;
   margin-bottom: 5px;
@@ -2314,18 +2323,18 @@ h2 {
   line-height: 1;
   font-weight: 600;
 }
-/* line 493, ../sass/styles.scss */
+/* line 503, ../sass/styles.scss */
 #content .view-news ul.items li.item .news-date {
   color: #ababab;
   font-size: 0.75em;
 }
 
 /* User profile page */
-/* line 504, ../sass/styles.scss */
+/* line 514, ../sass/styles.scss */
 .page-user .top {
   margin-bottom: 20px;
 }
-/* line 506, ../sass/styles.scss */
+/* line 516, ../sass/styles.scss */
 .page-user .top .field-name-field-user-soundbite {
   float: right;
   color: #a1b202;
@@ -2335,24 +2344,89 @@ h2 {
   margin-left: 20px;
   font-weight: 300;
 }
-/* line 516, ../sass/styles.scss */
+/* line 526, ../sass/styles.scss */
 .page-user .top .field-name-field-user-picture img {
   border: 3px solid #a1b202;
 }
-/* line 522, ../sass/styles.scss */
+/* line 532, ../sass/styles.scss */
 .page-user .field-label-inline .field-label {
   width: 205px;
 }
-/* line 527, ../sass/styles.scss */
+/* line 537, ../sass/styles.scss */
 .page-user .field-label-above p {
   margin-top: 4px;
+}
+
+/* Soundbites fellows */
+/* line 544, ../sass/styles.scss */
+.block-soundbites-fellows {
+  text-align: right;
+}
+/* line 546, ../sass/styles.scss */
+.block-soundbites-fellows .soundbite {
+  color: #a1b202;
+  font-family: "Open Sans Condensed";
+  font-size: 1.375em;
+  font-weight: 700;
+  font-style: italic;
+}
+/* line 553, ../sass/styles.scss */
+.block-soundbites-fellows .name {
+  color: #ababab;
+  margin-left: 30px;
+}
+
+/* Documents */
+/* line 563, ../sass/styles.scss */
+.node-type-document .field.field-label-inline .field-label {
+  width: 205px;
+}
+
+/* line 572, ../sass/styles.scss */
+.view-document-portal .view-content table {
+  width: 100%;
+}
+/* line 574, ../sass/styles.scss */
+.view-document-portal .view-content table caption {
+  margin-bottom: 20px;
+  color: #a1b202;
+  font-size: 1.5em;
+  font-family: "Open Sans Condensed";
+  font-weight: 600;
+  text-align: left;
+}
+/* line 583, ../sass/styles.scss */
+.view-document-portal .view-content table tr th {
+  text-align: left;
+}
+/* line 585, ../sass/styles.scss */
+.view-document-portal .view-content table tr th.views-field-created {
+  padding-left: 10px;
+}
+/* line 589, ../sass/styles.scss */
+.view-document-portal .view-content table tr td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/* line 592, ../sass/styles.scss */
+.view-document-portal .view-content table tr td.views-field-created {
+  padding-left: 10px;
+  width: 20%;
+}
+/* line 596, ../sass/styles.scss */
+.view-document-portal .view-content table tr td.views-field-title {
+  width: 70%;
+}
+/* line 601, ../sass/styles.scss */
+.view-document-portal .view-content table tr.odd td {
+  background-color: #f4f4f4;
 }
 
 /**
  * Footer
  * Sticky footer: see http://www.cssstickyfooter.com/
  */
-/* line 538, ../sass/styles.scss */
+/* line 614, ../sass/styles.scss */
 * {
   margin: 0;
   padding: 0;
@@ -2361,23 +2435,23 @@ h2 {
 /* must declare 0 margins on everything, also for main layout components use padding, not 
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
-/* line 547, ../sass/styles.scss */
+/* line 623, ../sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 551, ../sass/styles.scss */
+/* line 627, ../sass/styles.scss */
 #page-wrapper {
   min-height: 100%;
 }
 
-/* line 555, ../sass/styles.scss */
+/* line 631, ../sass/styles.scss */
 #page-wrapper-inner {
   overflow: auto;
   padding-bottom: 80px;
 }
 
-/* line 560, ../sass/styles.scss */
+/* line 636, ../sass/styles.scss */
 #footer {
   position: relative;
   margin-top: -80px;
@@ -2387,19 +2461,19 @@ html, body {
   border-bottom: 5px solid #a1b202;
   font-size: 0.875em;
 }
-/* line 567, ../sass/styles.scss */
+/* line 643, ../sass/styles.scss */
 #footer p {
   margin: 0;
   padding: 0;
 }
-/* line 571, ../sass/styles.scss */
+/* line 647, ../sass/styles.scss */
 #footer .block {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
 }
-/* line 579, ../sass/styles.scss */
+/* line 655, ../sass/styles.scss */
 #footer .block-footer-links .three-columns a {
   font-weight: 700;
   text-transform: uppercase;
@@ -2409,24 +2483,24 @@ html, body {
   line-height: 88px;
   display: inline-block;
 }
-/* line 589, ../sass/styles.scss */
+/* line 665, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-left a {
   background: url(../images/logo-ies.jpg) no-repeat left top;
   padding-left: 85px;
 }
-/* line 595, ../sass/styles.scss */
+/* line 671, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-center a {
   background: url(../images/logo-envelope.jpg) no-repeat left top;
   padding-left: 60px;
 }
-/* line 601, ../sass/styles.scss */
+/* line 677, ../sass/styles.scss */
 #footer .block-footer-links .three-columns .column-right a {
   background: url(../images/logo-poli.jpg) no-repeat right top;
   padding-right: 55px;
 }
 
 /*Opera Fix*/
-/* line 611, ../sass/styles.scss */
+/* line 687, ../sass/styles.scss */
 body:before {
   /* thanks to Maleika (Kohoutec)*/
   content: "";

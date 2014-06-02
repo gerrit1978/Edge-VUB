@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * This module provides a hook_node_access implementation
+ */
+
+/**
+ * Implements hook_node_access
+ */
+function hc_documents_node_access($node, $op, $account) {
+  if (isset($node->type) && ($node->type == 'document') && $op == 'view') {
+    return NODE_ACCESS_DENY;
+  }
+}

@@ -19,7 +19,7 @@ Drupal.behaviors.soundbitesSlider = {
     $('.view-team-members.view-display-id-block_3').flexslider({
       controlNav: false,
       directionNav: false,
-      slideshowSpeed: 3000 
+      slideshowSpeed: 7000 
     });
   }
 };
