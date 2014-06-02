@@ -5,6 +5,14 @@
  */
 
 /**
+ * Implements hook_init
+ */
+function hc_publications_init() {
+  $path = drupal_get_path('module', 'hc_publications');
+  drupal_add_js($path . "/hc_publications.js");
+}
+
+/**
  * Implements hook_block_info
  */
 function hc_publications_block_info() {
@@ -80,6 +88,7 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
   
   // get all fields for this node
   $pub_title = $node->title;
+  $pub_abstract_field = field_get_items('node', $node, 'field_pub_abstract');
   $pub_publication_year_field = field_get_items('node', $node, 'field_pub_publication_year');
   $pub_abstract_field = field_get_items('node', $node, 'field_pub_abstract');
   $pub_keywords_field = field_get_items('node', $node, 'field_pub_keywords');
@@ -97,6 +106,10 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
   
   $pub_conference_field = field_get_items('node', $node, 'field_pub_conference');
   
+  // ABSTRACT
+  if (count($pub_abstract_field)) {
+    $output_abstract = $pub_abstract_field[0]['safe_value'];
+  }
 
   // AUTHORS
   $output_authors = "";
@@ -206,7 +219,10 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
   $vars['output_type'] = "<div class='publication-type'>category: " . $publication_type_final . "</div>";
   
   // LINK
-  $vars['output_link'] = "<div class='link'>" . l('more info', 'node/' . $nid) . "</div>";
+  $vars['output_links'] = "<div class='links'><a href='#' class='toggle-abstract'>show abstract</a> &bull; " . l('more info', 'node/' . $nid) . "</div>";
+  
+  // ABSTRACT
+  $vars['output_abstract'] = "<div class='abstract'>" . $output_abstract . "</div>";
 }
 
 
