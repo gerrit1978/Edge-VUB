@@ -55,7 +55,7 @@ a {
   background: $green;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 6px 15px;
 }
 
 #content {
@@ -117,6 +117,7 @@ h2 {
 	      width: 33px;
 	      text-indent: -999em;
 	      cursor: pointer;
+	      padding: 0;
 	    }
 	  }
 	  .block-logo-vub {
