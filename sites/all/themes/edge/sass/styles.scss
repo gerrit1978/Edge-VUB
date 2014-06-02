@@ -47,6 +47,15 @@ a {
 
 .form-text {
   border: 2px solid $green;
+  height: 30px;
+  line-height: 30px;
+}
+
+.form-submit {
+  background: $green;
+  color: white;
+  border: none;
+  padding: 8px 15px;
 }
 
 #content {
@@ -66,6 +75,7 @@ h2 {
   color: $green;
   font-family: "Open Sans Condensed";
 }
+
 
 /* Header */
 #header {

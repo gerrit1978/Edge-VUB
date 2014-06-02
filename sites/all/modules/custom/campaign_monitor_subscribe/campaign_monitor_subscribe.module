@@ -39,11 +39,11 @@ function campaign_monitor_subscribe_menu() {
   
   $items['admin/settings/campaignmonitor'] = array(
     'title' => 'Campaign Monitor settings',
-	'description' => 'API settings for integration with Campaign Monitor',
-	'page callback' => 'drupal_get_form',
-	'page arguments' => array('campaign_monitor_subscribe_settings'),
-	'access arguments' => array('administer site configuration'),
-	'type' => MENU_NORMAL_ITEM,
+		'description' => 'API settings for integration with Campaign Monitor',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('campaign_monitor_subscribe_settings'),
+		'access arguments' => array('administer site configuration'),
+		'type' => MENU_NORMAL_ITEM,
   );
   
   return $items;
@@ -56,8 +56,7 @@ function campaign_monitor_subscribe_menu() {
  */
 function _campaign_monitor_subscribe_render_block() {
 
-  $output = "Op de hoogte blijven? Schrijf je in voor de nieuwsbrief!" 
-    . "<div id='postzegel'>&nbsp;</div>";
+  $output = "Lorem ipsum dolor sit amet. Change this text in campaign_monitor_subscribe.module";
   $form = drupal_get_form('campaign_monitor_subscribe');
   $output .= render($form);
 	return $output;
@@ -73,7 +72,8 @@ function campaign_monitor_subscribe($form_state) {
   $form['email'] = array(
 		'#type' => 'textfield',
 		'#title' => '',
-		'#default_value' => 'E-mail adres',
+		'#default_value' => '',
+		'#attributes' => array('placeholder' => 'E-mail address'),
 		'#size' => 60,
   );	
   
