@@ -1952,7 +1952,7 @@ h2 {
 }
 /* line 163, ../sass/styles.scss */
 #navigation ul li a:hover, #navigation ul li a.active {
-  color: #a1b202;
+  color: white;
 }
 
 /* Main content */
