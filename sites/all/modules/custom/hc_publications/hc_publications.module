@@ -152,10 +152,12 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
       $editor_type = $editor_field_collection_item->field_pub_editors_type->value();
       if ($editor_type == 'internal') {
         $editor_internal = $editor_field_collection_item->field_pub_editors_internal->value();
-        $editor_internal_firstname_field = field_get_items('user', $editor_internal, 'field_user_firstname');
-        $editor_internal_lastname_field = field_get_items('user', $editor_internal, 'field_user_lastname');
-        $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);
-        $all_editors[] = $editor_complete;
+        if ($editor_internal) {
+	        $editor_internal_firstname_field = field_get_items('user', $editor_internal, 'field_user_firstname');
+	        $editor_internal_lastname_field = field_get_items('user', $editor_internal, 'field_user_lastname');
+	        $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);
+	        $all_editors[] = $editor_complete;
+	      }
       } else {
         $editor_external = $editor_field_collection_item->field_pub_editors_external->value();
         $all_editors[] = $editor_external;
