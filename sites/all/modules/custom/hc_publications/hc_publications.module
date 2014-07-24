@@ -120,10 +120,12 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
       $author_type = $author_field_collection_item->field_pub_authors_type->value();
       if ($author_type == 'internal') {
         $author_internal = $author_field_collection_item->field_pub_authors_internal->value();
-        $author_internal_firstname_field = field_get_items('user', $author_internal, 'field_user_firstname');
-        $author_internal_lastname_field = field_get_items('user', $author_internal, 'field_user_lastname');
-        $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);
-        $all_authors[] = $author_complete;
+        if ($author_internal) {
+	        $author_internal_firstname_field = field_get_items('user', $author_internal, 'field_user_firstname');
+	        $author_internal_lastname_field = field_get_items('user', $author_internal, 'field_user_lastname');
+	        $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);
+	        $all_authors[] = $author_complete;
+	      }
       } else {
         $author_external = $author_field_collection_item->field_pub_authors_external->value();
         $all_authors[] = $author_external;
