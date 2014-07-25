@@ -49,6 +49,13 @@ a {
   }
 }
 
+.region-sidebar-first {
+  a {
+	  color: $darkGrey;
+	  border-bottom: 1px solid $lightGrey;
+  }
+}
+
 .form-text {
   border: 2px solid $green;
   height: 30px;
