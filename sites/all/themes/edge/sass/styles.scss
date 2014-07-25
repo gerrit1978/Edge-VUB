@@ -36,8 +36,12 @@ body {
  
 a {
   text-decoration: none;
+/*
   color: $darkGrey;
   border-bottom: 1px solid $lightGrey;
+*/
+  color: $green;
+  border-bottom: 1px solid $lightGreen;
   &:hover {
     color: $black;
     border-bottom: 1px solid $black;
