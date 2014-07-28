@@ -123,7 +123,16 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
         if ($author_internal) {
 	        $author_internal_firstname_field = field_get_items('user', $author_internal, 'field_user_firstname');
 	        $author_internal_lastname_field = field_get_items('user', $author_internal, 'field_user_lastname');
-	        $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);
+          $author_internal_c4 = field_get_items('user', $author_internal, 'field_user_uit_dienst');
+          if ($author_internal_c4) {
+            if (is_array($author_internal_c4) && isset($author_internal_c4[0]['value']) && $author_internal_c4[0]['value'] == 1) {
+              $author_complete = strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'];
+            } else {
+	            $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);                      
+            }
+          } else {
+	          $author_complete = l(strtoupper($author_internal_lastname_field[0]['value']) . ", " . $author_internal_firstname_field[0]['value'], 'user/' . $author_internal->uid);          
+          }
 	        $all_authors[] = $author_complete;
 	      }
       } else {
@@ -157,7 +166,16 @@ function hc_publications_preprocess_views_view_field__publications__nothing(&$va
         if ($editor_internal) {
 	        $editor_internal_firstname_field = field_get_items('user', $editor_internal, 'field_user_firstname');
 	        $editor_internal_lastname_field = field_get_items('user', $editor_internal, 'field_user_lastname');
-	        $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);
+          $editor_internal_c4 = field_get_items('user', $editor_internal, 'field_user_uit_dienst');
+          if ($editor_internal_c4) {
+            if (is_array($editor_internal_c4) && isset($editor_internal_c4[0]['value']) && $editor_internal_c4[0]['value'] == 1) {
+              $editor_complete = strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'];
+            } else {
+	            $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);                      
+            }
+          } else {
+	          $editor_complete = l(strtoupper($editor_internal_lastname_field[0]['value']) . ", " . $editor_internal_firstname_field[0]['value'], 'user/' . $editor_internal->uid);          
+          }
 	        $all_editors[] = $editor_complete;
 	      }
       } else {
@@ -284,6 +302,7 @@ function _hc_publications_get_types() {
 /** 
  * Preprocess function for working papers authors
  */
+/*
 function hc_publications_preprocess_views_view_field__working_papers__page__field_work_paper_user(&$vars) {
   $output = "";
   $output_type = "";
@@ -337,6 +356,7 @@ function hc_publications_preprocess_views_view_field__working_papers__page__fiel
 	
   $vars['authors'] = $output_authors;
 }
+*/
 
 /**
  * Helper function for rendering block Publications per user

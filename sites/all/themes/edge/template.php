@@ -68,14 +68,22 @@ function edge_preprocess_page(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("node" in this case.)
  */
-/* -- Delete this line if you want to use this function
+
 function edge_preprocess_node(&$variables, $hook) {
-  // Optionally, run node-type-specific preprocess functions, like
-  // edge_preprocess_node_page() or edge_preprocess_node_story().
-  $function = __FUNCTION__ . '_' . $variables['node']->type;
-  if (function_exists($function)) {
-    $function($variables, $hook);
+  if ($variables['type'] == 'frontpage') {
+    $node = $variables['node'];
+    $body = field_get_items('node', $node, 'body');
+    $variables['body'] = $body[0]['safe_value'];
+/*
+    print "<pre>";
+    print_r($node);
+    print "</pre>";
+*/
+    $visual_field = field_get_items('node', $node, 'field_frontpage_visual');
+    $visual_uri = file_create_url($visual_field[0]['uri']);
+    $variables['frontpage_visual'] = $visual_uri;
   }
+
 }
 // */
 
