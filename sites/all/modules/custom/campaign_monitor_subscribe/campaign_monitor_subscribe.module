@@ -56,7 +56,9 @@ function campaign_monitor_subscribe_menu() {
  */
 function _campaign_monitor_subscribe_render_block() {
 
-  $output = "Lorem ipsum dolor sit amet. Change this text in campaign_monitor_subscribe.module";
+  $output = "<p>Subscribe here to receive information on future events and publications of the EDGE Research Programme.</p>"
+    . "<p>We respect your privacy and your information will not be passed to any third party."
+    . "You can unsubscribe from news updates at any time.</p>";
   $form = drupal_get_form('campaign_monitor_subscribe');
   $output .= render($form);
 	return $output;
