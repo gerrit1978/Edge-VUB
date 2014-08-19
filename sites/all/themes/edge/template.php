@@ -162,14 +162,18 @@ function edge_preprocess_field(&$variables, $hook) {
       $author_type = $field_collection_item->field_pub_authors_type->value();
       switch ($author_type) {
         case 'internal':
-          $author_internal_uid = $field_collection_item->field_pub_authors_internal->value()->uid;
-          $author_internal = entity_metadata_wrapper('user', $author_internal_uid);
-          $author_internal_firstname = $author_internal->field_user_firstname->value();
-          $author_internal_lastname = $author_internal->field_user_lastname->value();
-          $author_internal_fullname = strtoupper($author_internal_lastname) . ", " . $author_internal_firstname;
-          $author_internal_output = l($author_internal_fullname, 'user/' . $author_internal_uid);
-          $authors_array[] = $author_internal_output;
+          $author_internal_field = $field_collection_item->field_pub_authors_internal->value();
+          if ($author_internal_field) {
+            $author_internal_uid = $author_internal_field->uid;          
+            $author_internal = entity_metadata_wrapper('user', $author_internal_uid);
+	          $author_internal_firstname = $author_internal->field_user_firstname->value();
+	          $author_internal_lastname = $author_internal->field_user_lastname->value();
+	          $author_internal_fullname = strtoupper($author_internal_lastname) . ", " . $author_internal_firstname;
+	          $author_internal_output = l($author_internal_fullname, 'user/' . $author_internal_uid);
+	          $authors_array[] = $author_internal_output;
+          }
           break;
+
         
         case 'external':
           $authors_array[] = $field_collection_item->field_pub_authors_external->value();
@@ -196,6 +200,56 @@ function edge_preprocess_field(&$variables, $hook) {
 	  }
     $variables['items'][0] = array('#markup' => $authors_final_output);
   }
+
+  if ($variables['element']['#field_name'] == 'field_pub_editors') {
+    $items = $variables['element']['#items'];
+    $editors_array = array();
+    foreach ($items as $item) {
+      $field_collection_item = entity_metadata_wrapper('field_collection_item', $item['value']);
+      $editor_type = $field_collection_item->field_pub_editors_type->value();
+      switch ($editor_type) {
+        case 'internal':
+          $editor_internal_field = $field_collection_item->field_pub_editors_internal->value();
+          if ($editor_internal_field) {
+            $editor_internal_uid = $author_internal_field->uid;          
+            $editor_internal = entity_metadata_wrapper('user', $editor_internal_uid);
+	          $editor_internal_firstname = $editor_internal->field_user_firstname->value();
+	          $editor_internal_lastname = $editor_internal->field_user_lastname->value();
+	          $editor_internal_fullname = strtoupper($editor_internal_lastname) . ", " . $editor_internal_firstname;
+	          $editor_internal_output = l($editor_internal_fullname, 'user/' . $editor_internal_uid);
+	          $editors_array[] = $editor_internal_output;
+          }
+          break;
+
+        
+        case 'external':
+          $editors_array[] = $field_collection_item->field_pub_editors_external->value();
+          break;
+      }
+    }
+
+    unset($variables['items']);
+    $i = 0;
+    if (count($editors_array) == 1) {
+      $editors_final_output = $editors_array[0];
+    } else {
+	    $editors_final_output = "";
+	    foreach($editors_array as $editor) {
+	      if ($i == 0) {
+	        $editors_final_output = $editors_array[0];
+	      } else if ($i < (count($editors_array)-1)) {
+	        $editors_final_output .= ", " . $editors_array[$i];
+	      } else {
+	        $editors_final_output .= " & " . $editors_array[$i];
+	      }
+        $i++;
+	    }
+	  }
+    $variables['items'][0] = array('#markup' => $editors_final_output);
+  }
+
+  
+  
 }
 
 /**
