@@ -19,6 +19,8 @@ Drupal.behaviors.toggleAbstract = {
         abstract.show();
         $(this).html('hide abstract');
       }
+      e.preventDefault();
+      return false;
     });
   }
 };
