@@ -22,6 +22,10 @@ function hc_publications_block_info() {
     'info' => t('Publications per user'),
   );
   
+  $blocks['publications_navigation'] = array(
+    'info' => t('Publications navigation'),
+  );
+  
   return $blocks;
 }
 
@@ -36,6 +40,9 @@ function hc_publications_block_view($delta = '') {
       $block['subject'] = t('Publications');
       $block['content'] = _hc_publications_block_publications_per_user_render();
       break;
+    case 'publications_navigation':
+      $block['subject'] = t('Publications');
+      $block['content'] = _hc_publications_block_publications_navigation_render();
   }
   
   return $block;
@@ -388,4 +395,39 @@ function _hc_publications_block_publications_per_user_render() {
   }
   
   return $output;
+}
+
+
+/**
+ * Helper function for rendering block Publications Navigation
+ */
+function _hc_publications_block_publications_navigation_render() {
+
+  $core_themes_publications = array();
+  $output_core_themes_publications = "";
+
+  // get a list of core themes with publications
+  $result = db_query("SELECT DISTINCT field_pub_core_theme_target_id AS corethemeid FROM {field_revision_field_pub_core_theme};");
+  foreach ($result as $row) {
+    $core_theme = node_load($row->corethemeid);
+    $core_themes_publications[] = l($core_theme->title, '/publications/' . $row->corethemeid, array('absolute' => TRUE));
+  }
+  
+  if (count($core_themes_publications)) {
+    $output_core_themes_publications = theme('item_list', array('items' => $core_themes_publications));
+  }
+
+  $output = "<div class='navigation-list'>"
+    . "<ul>"
+    . "<li><a href='/edge-working-paper-series'>EDGE Working Paper Series</a></li>"
+    . "<li>"
+    . "<a href='/publications'>EDGE Publications</a>"
+    . $output_core_themes_publications
+    . "</li>"
+    . "</ul>"
+    . "</div>";
+
+  
+  return $output;
+
 }

@@ -425,6 +425,17 @@ h1 {
   }
 }
 
+/* Publications Navigation */
+#block-hc-publications-publications-navigation {
+  .navigation-list {
+    ul {
+      ul {
+        margin-left: 1em;
+      }
+    }
+  }
+}
+
 /* Working paper series */
 .view-publications {
   h3.title {
