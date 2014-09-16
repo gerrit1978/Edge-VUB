@@ -414,6 +414,11 @@ h1 {
     .field-label {
       width: 205px;
     }
+    &.field-label-inline {
+      .field-items {
+        float: left;
+      }
+    } 
   }
   
   .field-collection-container {
